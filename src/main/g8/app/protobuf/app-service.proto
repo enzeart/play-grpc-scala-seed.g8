@@ -2,11 +2,11 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 option java_package = "$organization$";
-option java_outer_classname = "AppProto";
+option java_outer_classname = "$name;format="space,Camel"$AppServiceProto";
 
 package $organization$;
 
-service AppService {
+service $name;format="space,Camel"$AppService {
     rpc SayHello (HelloRequest) returns (HelloReply) {}
 }
 
