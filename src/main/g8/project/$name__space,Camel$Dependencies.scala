@@ -3,7 +3,9 @@ import sbt._
 
 object PlayGrpcTestDependencies {
 
-  val playGrpcRuntime: ModuleID = "com.lightbend.play" %% "play-grpc-runtime" % "0.9.1"
+  val playGrpcRuntime: ModuleID = "com.lightbend.play" %% "play-grpc-runtime" % "$play_grpc_runtime_version$"
+
+  val scalatestplusPlay: ModuleID = "org.scalatestplus.play" %% "scalatestplus-play" % "$scalatestplus_play_version$" % Test
 
   val akkaDiscovery: ModuleID = "com.typesafe.akka" %% "akka-discovery" % PlayVersion.akkaVersion
 
