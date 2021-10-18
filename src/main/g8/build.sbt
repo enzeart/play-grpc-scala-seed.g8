@@ -19,9 +19,5 @@ lazy val `$name;format="norm"$` = (project in file("."))
     )),
     dependencyOverrides ++= overrideDependencies,
     akkaGrpcExtraGenerators += PlayScalaServerCodeGenerator,
-    akkaGrpcGeneratedSources := Seq(AkkaGrpc.Server),
-    PlayKeys.devSettings ++= Seq(
-      "play.server.http.port" -> "disabled",
-      "play.server.https.port" -> "9443"
-    )
+    akkaGrpcGeneratedSources := Seq(AkkaGrpc.Server)
   )

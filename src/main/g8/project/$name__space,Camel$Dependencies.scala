@@ -1,4 +1,5 @@
 import play.core.PlayVersion
+import play.sbt.PlayImport._
 import sbt._
 
 object $name;format="space,Camel"$Dependencies {
@@ -14,6 +15,7 @@ object $name;format="space,Camel"$Dependencies {
   val akkaHttpSprayJson: ModuleID = "com.typesafe.akka" %% "akka-http-spray-json" % PlayVersion.akkaHttpVersion
 
   val rootDependencies: Seq[ModuleID] = Seq(
+    guice,
     playGrpcRuntime,
     scalatestplusPlay
   )
