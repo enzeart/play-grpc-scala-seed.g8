@@ -1,15 +1,17 @@
 package routers
 
 import akka.actor.ActorSystem
-import $organization$.{Abstract$name;format="space,Camel"$AppServiceRouter, HelloReply, HelloRequest}
+import akka.grpc.scaladsl.Metadata
+import com.example.grpc.{Abstract$name;format="space,Camel"$AppServicePowerApiRouter, EchoReply, EchoRequest}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
 class ProtobufRouter @Inject()(implicit actorSystem: ActorSystem)
-  extends Abstract$name;format="space,Camel"$AppServiceRouter(actorSystem) {
+  extends Abstract$name;format="space,Camel"$AppServicePowerApiRouter(actorSystem) {
 
-  override def sayHello(in: HelloRequest): Future[HelloReply] = Future.successful(HelloReply(message = in.name))
-
+  override def echo(in: EchoRequest, metadata: Metadata): Future[EchoReply] =
+    Future.successful(EchoReply(message = in.message))
 }
+

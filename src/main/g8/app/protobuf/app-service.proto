@@ -1,19 +1,19 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "$organization$";
+option java_package = "$organization$.grpc";
 option java_outer_classname = "$name;format="space,Camel"$AppServiceProto";
 
-package $organization$;
+package $organization$.grpc;
 
 service $name;format="space,Camel"$AppService {
-    rpc SayHello (HelloRequest) returns (HelloReply) {}
+    rpc Echo (EchoRequest) returns (EchoReply) {}
 }
 
-message HelloRequest {
-    string name = 1;
+message EchoRequest {
+    string message = 1;
 }
 
-message HelloReply {
+message EchoReply {
     string message = 1;
 }

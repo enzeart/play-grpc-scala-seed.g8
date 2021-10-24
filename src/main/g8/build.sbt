@@ -18,6 +18,7 @@ lazy val `$name;format="norm"$` = (project in file("."))
       scalaVersion := "$scala_version$"
     )),
     dependencyOverrides ++= overrideDependencies,
+    akkaGrpcCodeGeneratorSettings += "server_power_apis",
     akkaGrpcExtraGenerators += PlayScalaServerCodeGenerator,
     akkaGrpcGeneratedSources := Seq(AkkaGrpc.Server)
   )
