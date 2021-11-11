@@ -6,6 +6,8 @@ object $name;format="space,Camel"$Dependencies {
 
   val playGrpcRuntime: ModuleID = "com.lightbend.play" %% "play-grpc-runtime" % "$play_grpc_runtime_version$"
 
+  val scalaGuice: ModuleID = "net.codingwell" %% "scala-guice" % "$scala_guice_version$"
+
   val scalatestplusPlay: ModuleID = "org.scalatestplus.play" %% "scalatestplus-play" % "$scalatestplus_play_version$" % Test
 
   val akkaDiscovery: ModuleID = "com.typesafe.akka" %% "akka-discovery" % PlayVersion.akkaVersion
@@ -14,10 +16,14 @@ object $name;format="space,Camel"$Dependencies {
 
   val akkaHttpSprayJson: ModuleID = "com.typesafe.akka" %% "akka-http-spray-json" % PlayVersion.akkaHttpVersion
 
+  val pureconfig: ModuleID = "com.github.pureconfig" %% "pureconfig" % "$pureconfig_version$"
+
   val rootDependencies: Seq[ModuleID] = Seq(
     guice,
     playGrpcRuntime,
-    scalatestplusPlay
+    scalaGuice,
+    scalatestplusPlay,
+    pureconfig
   )
 
   val overrideDependencies: Seq[ModuleID] = Seq(
