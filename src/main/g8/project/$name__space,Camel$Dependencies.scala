@@ -18,9 +18,12 @@ object $name;format="space,Camel"$Dependencies {
 
   val pureconfig: ModuleID = "com.github.pureconfig" %% "pureconfig" % "$pureconfig_version$"
 
-  val rootDependencies: Seq[ModuleID] = Seq(
+  val protoDependencies: Seq[ModuleID] = Seq(
+    playGrpcRuntime
+  )
+
+  val serverDependencies: Seq[ModuleID] = Seq(
     guice,
-    playGrpcRuntime,
     scalaGuice,
     scalatestplusPlay,
     pureconfig

@@ -1,10 +1,10 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "$organization$.grpc";
+option java_package = "$package$.grpc";
 option java_outer_classname = "$name;format="space,Camel"$AppServiceProto";
 
-package $organization$.grpc;
+package $package$.grpc;
 
 service $name;format="space,Camel"$AppService {
     rpc Echo (EchoRequest) returns (EchoReply) {}
