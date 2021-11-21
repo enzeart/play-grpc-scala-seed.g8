@@ -44,5 +44,5 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
   .settings(
     name := "$name;format="norm"$-server",
     libraryDependencies ++= serverDependencies,
-    dependencyOverrides ++= overrideDependencies
+    dependencyOverrides ++= serverDependencyOverrides
   )

@@ -29,7 +29,7 @@ object $name;format="space,Camel"$Dependencies {
     pureconfig
   )
 
-  val overrideDependencies: Seq[ModuleID] = Seq(
+  val serverDependencyOverrides: Seq[ModuleID] = Seq(
     akkaDiscovery,
     akkaHttp,
     akkaHttpSprayJson
