@@ -3,7 +3,7 @@ import play.grpc.gen.scaladsl.PlayScalaServerCodeGenerator
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-lazy val `root` = (project in file("."))
+lazy val `$name;format="norm"$` = (project in file("."))
   .aggregate(
     `$name;format="norm"$-proto`,
     `$name;format="norm"$-server`
