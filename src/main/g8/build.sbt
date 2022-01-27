@@ -34,7 +34,8 @@ lazy val `$name;format="norm"$-protobuf` = (project in file("$name;format="norm"
           toPath.endsWith(".proto")
       }
     },
-    Compile / PB.targets += scalapb.validate.gen(FlatPackage) -> (Compile / akkaGrpcCodeGeneratorSettings / target).value
+    Compile / PB.targets += scalapb.validate.gen(FlatPackage) -> (Compile / akkaGrpcCodeGeneratorSettings / target).value,
+    Compile / packageBin / packageOptions += Package.ManifestAttributes("ScalaPB-Options-Proto" -> "$package;format="packaged"$/grpc/service-options.proto")
   )
 
 lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-server"))
