@@ -1,6 +1,7 @@
 import $name;format="space,Camel"$Dependencies._
 import play.grpc.gen.scaladsl.PlayScalaServerCodeGenerator
 import scalapb.GeneratorOption._
+import play.sbt.PlayImport.PlayKeys.devSettings
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -48,5 +49,7 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
   .settings(
     name := "$name;format="norm"$-server",
     libraryDependencies ++= serverDependencies,
-    dependencyOverrides ++= serverDependencyOverrides
+    dependencyOverrides ++= serverDependencyOverrides,
+    devSettings ++= Seq(
+    )
   )
