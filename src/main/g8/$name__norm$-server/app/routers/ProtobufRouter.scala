@@ -15,4 +15,3 @@ class ProtobufRouter @Inject() (appConfig: AppConfig)(implicit actorSystem: Acto
   override def echo(in: EchoRequest, metadata: Metadata): Future[EchoReply] =
     Future.successful(EchoReply(message = in.message))
 }
-
