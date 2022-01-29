@@ -1,7 +1,7 @@
 import $name;format="space,Camel"$Dependencies._
 import play.grpc.gen.scaladsl.PlayScalaServerCodeGenerator
 import scalapb.GeneratorOption._
-import play.sbt.PlayImport.PlayKeys.devSettings
+import play.sbt.PlayImport.PlayKeys._
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -24,8 +24,8 @@ lazy val `$name;format="norm"$-protobuf` = (project in file("$name;format="norm"
   )
   .settings(
     name := "$name;format="norm"$-protobuf",
-    libraryDependencies := protobufDependencies,
-    dependencyOverrides := protobufDependencyOverrides,
+    libraryDependencies ++= protobufDependencies,
+    dependencyOverrides ++= protobufDependencyOverrides,
     akkaGrpcCodeGeneratorSettings += "server_power_apis",
     akkaGrpcExtraGenerators ++= Seq(PlayScalaServerCodeGenerator),
     akkaGrpcGeneratedSources := Seq(AkkaGrpc.Server),
