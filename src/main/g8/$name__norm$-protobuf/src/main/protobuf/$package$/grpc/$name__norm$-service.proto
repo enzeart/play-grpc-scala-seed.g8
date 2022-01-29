@@ -2,13 +2,13 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 option java_package = "$package$.grpc";
-option java_outer_classname = "$name;format="space,Camel"$AppServiceProto";
+option java_outer_classname = "$name;format="space,Camel"$ServiceProto";
 
 package $package$.grpc;
 
 import "validate/validate.proto";
 
-service $name;format="space,Camel"$AppService {
+service $name;format="space,Camel"$Service {
     rpc Echo (EchoRequest) returns (EchoReply) {}
 }
 
