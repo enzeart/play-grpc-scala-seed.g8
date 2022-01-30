@@ -29,6 +29,7 @@ lazy val `$name;format="norm"$-protobuf` = (project in file("$name;format="norm"
     akkaGrpcCodeGeneratorSettings += "server_power_apis",
     akkaGrpcExtraGenerators ++= Seq(PlayScalaServerCodeGenerator),
     akkaGrpcGeneratedSources := Seq(AkkaGrpc.Server),
+    g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8",
     Compile / packageBin / mappings ~= { (ms: Seq[(File, String)]) =>
       ms filter {
         case (_, toPath) =>
@@ -50,6 +51,7 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
     name := "$name;format="norm"$-server",
     libraryDependencies ++= serverDependencies,
     dependencyOverrides ++= serverDependencyOverrides,
+    g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8",
     devSettings ++= Seq(
       "play.server.http.port" -> "$app_port$"
     )
