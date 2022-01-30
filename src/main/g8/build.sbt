@@ -51,5 +51,6 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
     libraryDependencies ++= serverDependencies,
     dependencyOverrides ++= serverDependencyOverrides,
     devSettings ++= Seq(
+      "play.server.http.port" -> "$app_port$"
     )
   )
