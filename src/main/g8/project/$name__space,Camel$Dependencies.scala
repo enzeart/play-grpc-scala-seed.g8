@@ -23,6 +23,7 @@ object $name;format="space,Camel"$Dependencies {
 
   val scalapbValidateCoreProtobuf: ModuleID = scalapbValidateCore % "protobuf"
 
+  // Akka
   val akkaDiscovery: ModuleID = "com.typesafe.akka" %% "akka-discovery" % PlayVersion.akkaVersion
 
   val akkaHttp: ModuleID = "com.typesafe.akka" %% "akka-http" % PlayVersion.akkaHttpVersion
