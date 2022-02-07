@@ -43,7 +43,7 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
   .enablePlugins(
     PlayScala,
     PlayAkkaHttp2Support,
-    $name;format="space,Camel"$Plugin
+    $name;format="space,Camel"$ServerPlugin
   )
   .dependsOn(`$name;format="norm"$-protobuf`)
   .settings(

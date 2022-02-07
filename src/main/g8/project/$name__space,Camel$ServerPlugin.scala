@@ -1,7 +1,7 @@
 import giter8.ScaffoldPlugin
 import sbt.{AutoPlugin, Def, _}
 
-object $name;format="space,Camel"$Plugin extends AutoPlugin {
+object $name;format="space,Camel"$ServerPlugin extends AutoPlugin {
 
   object autoImport {
   }
