@@ -41,6 +41,14 @@ object $name;format="space,Camel"$Dependencies {
     scalapbRuntime
   )
 
+  val coreDependencies: Seq[ModuleID] = Seq(
+
+  )
+
+  val coreDependencyOverrides: Seq[ModuleID] = Seq(
+
+  )
+
   val serverDependencies: Seq[ModuleID] = Seq(
     guice,
     pureconfig,

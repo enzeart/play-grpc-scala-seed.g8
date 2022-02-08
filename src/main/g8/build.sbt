@@ -1,5 +1,5 @@
 import $name;format="space,Camel"$Dependencies._
-import play.grpc.gen.scaladsl.PlayScalaServerCodeGenerator
+import play.grpc.gen.scaladsl._
 import scalapb.GeneratorOption._
 import play.sbt.PlayImport.PlayKeys._
 
@@ -25,10 +25,10 @@ lazy val `$name;format="norm"$-protobuf` = (project in file("$name;format="norm"
     name := "$name;format="norm"$-protobuf",
     libraryDependencies ++= protobufDependencies,
     dependencyOverrides ++= protobufDependencyOverrides,
+    g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8",
     akkaGrpcCodeGeneratorSettings += "server_power_apis",
     akkaGrpcExtraGenerators ++= Seq(PlayScalaServerCodeGenerator),
     akkaGrpcGeneratedSources := Seq(AkkaGrpc.Server),
-    g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8",
     Compile / packageBin / mappings ~= { (ms: Seq[(File, String)]) =>
       ms filter {
         case (_, toPath) =>
@@ -39,13 +39,31 @@ lazy val `$name;format="norm"$-protobuf` = (project in file("$name;format="norm"
     Compile / packageBin / packageOptions += Package.ManifestAttributes("ScalaPB-Options-Proto" -> "$package;format="packaged"$/grpc/$name;format="norm"$-service-options.proto")
   )
 
+lazy val `$name;format="norm"$-core` = (project in file("$name;format="norm"$-core"))
+  .enablePlugins(AkkaGrpcPlugin)
+  .settings(
+    name := "$name;format="norm"$-core",
+    libraryDependencies ++= coreDependencies,
+    dependencyOverrides ++= coreDependencyOverrides,
+    libraryDependencies ++= protobufDependencies,
+    dependencyOverrides ++= protobufDependencyOverrides,
+    g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8",
+    akkaGrpcExtraGenerators ++= Seq(PlayScalaClientCodeGenerator),
+    akkaGrpcGeneratedSources := Seq(AkkaGrpc.Client),
+    Compile / PB.targets += scalapb.validate.gen(FlatPackage) -> (Compile / akkaGrpcCodeGeneratorSettings / target).value
+  )
+
+
 lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-server"))
   .enablePlugins(
     PlayScala,
     PlayAkkaHttp2Support,
     $name;format="space,Camel"$ServerPlugin
   )
-  .dependsOn(`$name;format="norm"$-protobuf`)
+  .dependsOn(
+    `$name;format="norm"$-protobuf`,
+    `$name;format="norm"$-core`
+  )
   .settings(
     name := "$name;format="norm"$-server",
     libraryDependencies ++= serverDependencies,
