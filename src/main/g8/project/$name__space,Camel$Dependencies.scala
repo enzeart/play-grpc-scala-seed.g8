@@ -41,6 +41,10 @@ object $name;format="space,Camel"$Dependencies {
     scalapbRuntime
   )
 
+  val protobufServiceDependencies: Seq[ModuleID] = Seq(
+
+  )
+
   val coreDependencies: Seq[ModuleID] = Seq(
 
   )

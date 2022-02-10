@@ -1,4 +1,3 @@
-import $name;format="space,Camel"$Dependencies._
 import play.grpc.gen.scaladsl._
 import scalapb.GeneratorOption._
 import play.sbt.PlayImport.PlayKeys._
@@ -23,8 +22,8 @@ lazy val `$name;format="norm"$-protobuf` = (project in file("$name;format="norm"
   )
   .settings(
     name := "$name;format="norm"$-protobuf",
-    libraryDependencies ++= protobufDependencies,
-    dependencyOverrides ++= protobufDependencyOverrides,
+    libraryDependencies ++= $name;format="space,Camel"$Dependencies.protobufDependencies,
+    dependencyOverrides ++= $name;format="space,Camel"$Dependencies.protobufDependencyOverrides,
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8",
     akkaGrpcCodeGeneratorSettings += "server_power_apis",
     akkaGrpcExtraGenerators ++= Seq(PlayScalaServerCodeGenerator),
@@ -43,10 +42,11 @@ lazy val `$name;format="norm"$-core` = (project in file("$name;format="norm"$-co
   .enablePlugins(AkkaGrpcPlugin)
   .settings(
     name := "$name;format="norm"$-core",
-    libraryDependencies ++= coreDependencies,
-    dependencyOverrides ++= coreDependencyOverrides,
-    libraryDependencies ++= protobufDependencies,
-    dependencyOverrides ++= protobufDependencyOverrides,
+    libraryDependencies ++= $name;format="space,Camel"$Dependencies.coreDependencies,
+    dependencyOverrides ++= $name;format="space,Camel"$Dependencies.coreDependencyOverrides,
+    libraryDependencies ++= $name;format="space,Camel"$Dependencies.protobufDependencies,
+    libraryDependencies ++= $name;format="space,Camel"$Dependencies.protobufServiceDependencies,
+    dependencyOverrides ++= $name;format="space,Camel"$Dependencies.protobufDependencyOverrides,
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8",
     akkaGrpcExtraGenerators ++= Seq(PlayScalaClientCodeGenerator),
     akkaGrpcGeneratedSources := Seq(AkkaGrpc.Client),
@@ -66,8 +66,8 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
   )
   .settings(
     name := "$name;format="norm"$-server",
-    libraryDependencies ++= serverDependencies,
-    dependencyOverrides ++= serverDependencyOverrides,
+    libraryDependencies ++= $name;format="space,Camel"$Dependencies.serverDependencies,
+    dependencyOverrides ++= $name;format="space,Camel"$Dependencies.serverDependencyOverrides,
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8",
     devSettings ++= Seq(
       "play.server.http.port" -> "$app_port$"
