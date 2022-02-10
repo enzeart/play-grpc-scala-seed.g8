@@ -7,6 +7,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 lazy val `$name;format="norm"$` = (project in file("."))
   .aggregate(
     `$name;format="norm"$-protobuf`,
+    `$name;format="norm"$-core`,
     `$name;format="norm"$-server`
   )
   .settings(
@@ -35,7 +36,7 @@ lazy val `$name;format="norm"$-protobuf` = (project in file("$name;format="norm"
       }
     },
     Compile / PB.targets += scalapb.validate.gen(FlatPackage) -> (Compile / akkaGrpcCodeGeneratorSettings / target).value,
-    Compile / packageBin / packageOptions += Package.ManifestAttributes("ScalaPB-Options-Proto" -> "$package;format="packaged"$/grpc/$name;format="norm"$-service-options.proto")
+    Compile / packageBin / packageOptions += Package.ManifestAttributes("ScalaPB-Options-Proto" -> "$package;format="packaged"$/grpc/$name;format="snake"$_service_options.proto")
   )
 
 lazy val `$name;format="norm"$-core` = (project in file("$name;format="norm"$-core"))
