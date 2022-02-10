@@ -1,4 +1,4 @@
-package $package$
+package $package$.core
 
 import javax.inject.{Inject, Singleton}
 

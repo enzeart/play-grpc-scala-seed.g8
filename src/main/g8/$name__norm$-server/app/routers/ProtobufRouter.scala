@@ -3,7 +3,7 @@ package routers
 import akka.actor.ActorSystem
 import akka.grpc.scaladsl.Metadata
 import $package$.grpc.{Abstract$name;format="space,Camel"$ServicePowerApiRouter, EchoReply, EchoRequest}
-import $package$.$name;format="space,Camel"$Service
+import $package$.core.$name;format="space,Camel"$Service
 import config.AppConfig
 
 import javax.inject.{Inject, Singleton}
