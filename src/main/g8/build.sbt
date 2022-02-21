@@ -75,5 +75,7 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
     Compile / PB.targets += scalapb.validate.gen(FlatPackage) -> (Compile / akkaGrpcCodeGeneratorSettings / target).value,
     devSettings ++= Seq(
       "play.server.http.port" -> "$app_port$"
-    )
+    ),
+    Universal / packageName := name.value,
+    topLevelDirectory := Some(packageName.value)
   )
