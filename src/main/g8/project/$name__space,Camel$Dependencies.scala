@@ -1,6 +1,7 @@
 import play.core.PlayVersion
 import play.sbt.PlayImport._
 import sbt._
+import sbtprotoc.ProtocPlugin.ProtobufConfig
 
 object $name;format="space,Camel"$Dependencies {
 
@@ -21,7 +22,7 @@ object $name;format="space,Camel"$Dependencies {
 
   val scalapbValidateCore: ModuleID = "com.thesamet.scalapb" %% "scalapb-validate-core" % scalapb.validate.compiler.BuildInfo.version
 
-  val scalapbValidateCoreProtobuf: ModuleID = scalapbValidateCore % "protobuf"
+  val scalapbValidateCoreProtobuf: ModuleID = scalapbValidateCore % ProtobufConfig
 
   // Akka
   val akkaDiscovery: ModuleID = "com.typesafe.akka" %% "akka-discovery" % PlayVersion.akkaVersion
