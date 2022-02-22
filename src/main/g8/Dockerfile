@@ -1,8 +1,8 @@
 FROM ubuntu:latest AS builder
 
 WORKDIR /build
-
 COPY . .
+
 RUN apt-get update && apt-get install -y curl zip openjdk-11-jdk
 SHELL ["/bin/bash", "-c"]
 RUN curl -s https://get.sdkman.io | bash
