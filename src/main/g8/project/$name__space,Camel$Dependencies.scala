@@ -20,7 +20,8 @@ object $name;format="space,Camel"$Dependencies {
 
   val scalapbRuntime: ModuleID = "com.thesamet.scalapb" %% "scalapb-runtime" % "$scalapb_runtime_version$"
 
-  val scalapbValidateCore: ModuleID = "com.thesamet.scalapb" %% "scalapb-validate-core" % scalapb.validate.compiler.BuildInfo.version
+  val scalapbValidateCore: ModuleID =
+    "com.thesamet.scalapb" %% "scalapb-validate-core" % scalapb.validate.compiler.BuildInfo.version
 
   val scalapbValidateCoreProtobuf: ModuleID = scalapbValidateCore % ProtobufConfig
 

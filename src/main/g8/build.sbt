@@ -11,10 +11,12 @@ lazy val `$name;format="norm"$` = (project in file("."))
     `$name;format="norm"$-server`
   )
   .settings(
-    inThisBuild(Seq(
-      organization := "$organization$",
-      scalaVersion := "$scala_version$"
-    ))
+    inThisBuild(
+      Seq(
+        organization := "$organization$",
+        scalaVersion := "$scala_version$"
+      )
+    )
   )
 
 lazy val `$name;format="norm"$-protobuf` = (project in file("$name;format="norm"$-protobuf"))
@@ -32,7 +34,8 @@ lazy val `$name;format="norm"$-protobuf` = (project in file("$name;format="norm"
           toPath.endsWith(".proto")
       }
     },
-    Compile / packageBin / packageOptions += Package.ManifestAttributes("ScalaPB-Options-Proto" -> "$package;format="packaged"$/grpc/$name;format="snake"$_service_options.proto")
+    Compile / packageBin / packageOptions += Package
+      .ManifestAttributes("ScalaPB-Options-Proto" -> "$package;format="packaged"$/grpc/$name;format="snake"$_service_options.proto")
   )
 
 lazy val `$name;format="norm"$-core` = (project in file("$name;format="norm"$-core"))
@@ -47,9 +50,9 @@ lazy val `$name;format="norm"$-core` = (project in file("$name;format="norm"$-co
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8",
     akkaGrpcExtraGenerators ++= Seq(PlayScalaClientCodeGenerator),
     akkaGrpcGeneratedSources := Seq(AkkaGrpc.Client),
-    Compile / PB.targets += scalapb.validate.gen(FlatPackage) -> (Compile / akkaGrpcCodeGeneratorSettings / target).value
+    Compile / PB.targets += scalapb.validate
+      .gen(FlatPackage) -> (Compile / akkaGrpcCodeGeneratorSettings / target).value
   )
-
 
 lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-server"))
   .enablePlugins(
@@ -72,7 +75,8 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
     akkaGrpcExtraGenerators ++= Seq(PlayScalaServerCodeGenerator),
     akkaGrpcGeneratedSources := Seq(AkkaGrpc.Server),
     Compile / PB.protoSources += (`$name;format="norm"$-protobuf` / sourceDirectory).value / "main" / "protobuf",
-    Compile / PB.targets += scalapb.validate.gen(FlatPackage) -> (Compile / akkaGrpcCodeGeneratorSettings / target).value,
+    Compile / PB.targets += scalapb.validate
+      .gen(FlatPackage) -> (Compile / akkaGrpcCodeGeneratorSettings / target).value,
     devSettings ++= Seq(
       "play.server.http.port" -> "$app_port$"
     ),
