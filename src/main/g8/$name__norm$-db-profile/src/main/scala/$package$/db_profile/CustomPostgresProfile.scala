@@ -2,7 +2,7 @@ package $package$.db_profile
 import com.github.tminglei.slickpg._
 
 trait CustomPostgresProfile
-  extends ExPostgresProfile
+    extends ExPostgresProfile
     with PgArraySupport
     with PgDate2Support
     with PgRangeSupport
@@ -18,7 +18,7 @@ trait CustomPostgresProfile
   override val api: API = MyAPI
 
   object MyAPI
-    extends API
+      extends API
       with ArrayImplicits
       with DateTimeImplicits
       with NetImplicits
