@@ -11,31 +11,38 @@ import scala.util.Using
 object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
 
   object autoImport {
-    val $name;format="space,camel"$SlickCodegenAdditionalClasspath = settingKey[Seq[File]]("Additional classpath entries for Slick code generation")
-    val $name;format="space,camel"$SlickCodegenJdbcDriver = settingKey[String]("The FQCN of the JDBC driver used for Slick code generation")
+    val $name;format="space,camel"$SlickCodegenAdditionalClasspath =
+      settingKey[Seq[File]]("Additional classpath entries for Slick code generation")
+    val $name;format="space,camel"$SlickCodegenJdbcDriver =
+      settingKey[String]("The FQCN of the JDBC driver used for Slick code generation")
     val $name;format="space,camel"$SlickCodegenProfile = settingKey[String]("The FQCN of the profile used for Slick code generation")
     val $name;format="space,camel"$SlickCodegenPackage = settingKey[String]("The package used for generated Slick code")
-    val $name;format="space,camel"$SlickCodegenOutputDir = settingKey[File]("The output directory where generated Slick code is stored")
-    val $name;format="space,camel"$SlickCodegenSourceGeneratorClass = settingKey[String]("The FQCN of the Slick source code generator class")
-    val $name;format="space,camel"$SlickCodegenOutputToMultipleFiles = settingKey[Boolean]("Output generated Slick code to multiple files?")
-    val $name;format="space,camel"$SlickCodegenIgnoreInvalidDefaults = settingKey[Boolean]("Ignore invalid default values for generated Slick code?")
-    val $name;format="space,camel"$SlickCodegenDatabaseDockerImage = settingKey[String]("The database Docker image to use for Slick code generation")
+    val $name;format="space,camel"$SlickCodegenOutputDir =
+      settingKey[File]("The output directory where generated Slick code is stored")
+    val $name;format="space,camel"$SlickCodegenSourceGeneratorClass =
+      settingKey[String]("The FQCN of the Slick source code generator class")
+    val $name;format="space,camel"$SlickCodegenOutputToMultipleFiles =
+      settingKey[Boolean]("Output generated Slick code to multiple files?")
+    val $name;format="space,camel"$SlickCodegenIgnoreInvalidDefaults =
+      settingKey[Boolean]("Ignore invalid default values for generated Slick code?")
+    val $name;format="space,camel"$SlickCodegenDatabaseDockerImage =
+      settingKey[String]("The database Docker image to use for Slick code generation")
     val $name;format="space,camel"$SlickCodegen = taskKey[Seq[File]]("Generate Slick code based on Flyway migrations")
   }
 
   import autoImport._
 
   val $name;format="space,camel"$SlickCodegenTask = Def.taskDyn {
-    val additionalClasspath = (Compile / $name;format="space,camel"$SlickCodegenAdditionalClasspath).value
-    val jdbcDriver = (Compile / $name;format="space,camel"$SlickCodegenJdbcDriver).value
-    val profile = (Compile / $name;format="space,camel"$SlickCodegenProfile).value
-    val pkg = (Compile / $name;format="space,camel"$SlickCodegenPackage).value
-    val outputDir = (Compile / $name;format="space,camel"$SlickCodegenOutputDir).value
-    val sourceGeneratorClass = (Compile / $name;format="space,camel"$SlickCodegenSourceGeneratorClass).value
+    val additionalClasspath   = (Compile / $name;format="space,camel"$SlickCodegenAdditionalClasspath).value
+    val jdbcDriver            = (Compile / $name;format="space,camel"$SlickCodegenJdbcDriver).value
+    val profile               = (Compile / $name;format="space,camel"$SlickCodegenProfile).value
+    val pkg                   = (Compile / $name;format="space,camel"$SlickCodegenPackage).value
+    val outputDir             = (Compile / $name;format="space,camel"$SlickCodegenOutputDir).value
+    val sourceGeneratorClass  = (Compile / $name;format="space,camel"$SlickCodegenSourceGeneratorClass).value
     val outputToMultipleFiles = (Compile / $name;format="space,camel"$SlickCodegenOutputToMultipleFiles).value.toString
     val ignoreInvalidDefaults = (Compile / $name;format="space,camel"$SlickCodegenIgnoreInvalidDefaults).value.toString
-    val databaseDockerImage = (Compile / $name;format="space,camel"$SlickCodegenDatabaseDockerImage).value
-    val classpath = (Compile / dependencyClasspath).value.files ++ additionalClasspath
+    val databaseDockerImage   = (Compile / $name;format="space,camel"$SlickCodegenDatabaseDockerImage).value
+    val classpath             = (Compile / dependencyClasspath).value.files ++ additionalClasspath
 
     Using.resources(
       new PostgreSQLContainer(databaseDockerImage),
@@ -46,7 +53,7 @@ object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
       databaseContainer.withPassword(UUID.randomUUID().toString)
       databaseContainer.start()
 
-      val jdbcUrl = databaseContainer.getJdbcUrl
+      val jdbcUrl  = databaseContainer.getJdbcUrl
       val username = databaseContainer.getUsername
       val password = databaseContainer.getPassword
 
@@ -66,7 +73,8 @@ object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
             password,
             ignoreInvalidDefaults,
             sourceGeneratorClass,
-            outputToMultipleFiles),
+            outputToMultipleFiles
+          ),
           streams.value.log
         )
         .failed
