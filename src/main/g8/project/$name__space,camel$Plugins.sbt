@@ -16,3 +16,11 @@ libraryDependencies ++= Seq(
   "com.thesamet.scalapb" %% "compilerplugin"           % "$scalapb_compilerplugin_version$",
   "com.thesamet.scalapb" %% "scalapb-validate-codegen" % "$scalapb_validate_codegen_version$"
 )
+
+// Database
+libraryDependencies ++= Seq(
+  "org.flywaydb"       % "flyway-core"    % "$flyway_version$",
+  "org.testcontainers" % "testcontainers" % "$testcontainers_version$",
+  "org.testcontainers" % "postgresql"     % "$testcontainers_postgresql_version$",
+  "org.postgresql"     % "postgresql"     % "$postgresql_version$"
+)

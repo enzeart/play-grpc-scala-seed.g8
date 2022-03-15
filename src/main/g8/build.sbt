@@ -8,7 +8,9 @@ lazy val `$name;format="norm"$` = (project in file("."))
   .aggregate(
     `$name;format="norm"$-protobuf`,
     `$name;format="norm"$-core`,
-    `$name;format="norm"$-server`
+    `$name;format="norm"$-server`,
+    `$name;format="norm"$-db-profile`,
+    `$name;format="norm"$-db`
   )
   .settings(
     inThisBuild(
@@ -38,7 +40,26 @@ lazy val `$name;format="norm"$-protobuf` = (project in file("$name;format="norm"
       .ManifestAttributes("ScalaPB-Options-Proto" -> "$package;format="packaged"$/grpc/$name;format="snake"$_service_options.proto")
   )
 
+lazy val `$name;format="norm"$-db-profile` = (project in file("$name;format="norm"$-db-profile"))
+  .settings(
+    name := "$name;format="norm"$-db-profile",
+    libraryDependencies ++= $name;format="space,Camel"$Dependencies.dbDependencies,
+    dependencyOverrides ++= $name;format="space,Camel"$Dependencies.dbDependencyOverrides,
+    g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8"
+  )
+
+lazy val `$name;format="norm"$-db` = (project in file("$name;format="norm"$-db"))
+  .dependsOn(`$name;format="norm"$-db-profile`)
+  .enablePlugins($name;format="space,Camel"$DbPlugin)
+  .settings(
+    name := "$name;format="norm"$-db",
+    $name;format="space,camel"$SlickCodegenAdditionalClasspath += (`$name;format="norm"$-db-profile` / Compile / classDirectory).value,
+    $name;format="space,camel"$SlickCodegenAdditionalClasspath ++= (Compile / resourceDirectories).value,
+    g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8"
+  )
+
 lazy val `$name;format="norm"$-core` = (project in file("$name;format="norm"$-core"))
+  .dependsOn(`$name;format="norm"$-db`)
   .enablePlugins(AkkaGrpcPlugin)
   .settings(
     name := "$name;format="norm"$-core",

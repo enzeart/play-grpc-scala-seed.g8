@@ -32,6 +32,17 @@ object $name;format="space,Camel"$Dependencies {
 
   val akkaHttpSprayJson: ModuleID = "com.typesafe.akka" %% "akka-http-spray-json" % PlayVersion.akkaHttpVersion
 
+  // Database
+  val slickVersion = "$slick_version$"
+
+  val slick: ModuleID = "com.typesafe.slick" %% "slick" % slickVersion
+
+  val slickCodegen: ModuleID = "com.typesafe.slick" %% "slick-codegen" % slickVersion
+
+  val postgresql: ModuleID = "org.postgresql" % "postgresql" % "$postgresql_version$"
+
+  val slickPg: ModuleID = "com.github.tminglei" %% "slick-pg" % "$slick_pg_version$"
+
   val protobufDependencies: Seq[ModuleID] = Seq(
     playGrpcRuntime,
     scalapbValidateCore,
@@ -45,6 +56,16 @@ object $name;format="space,Camel"$Dependencies {
 
   val protobufServiceDependencies: Seq[ModuleID] = Seq(
 
+  )
+
+  val dbDependencies: Seq[ModuleID] = Seq(
+    slick,
+    slickCodegen,
+    postgresql,
+    slickPg
+  )
+
+  val dbDependencyOverrides: Seq[ModuleID] = Seq(
   )
 
   val coreDependencies: Seq[ModuleID] = Seq(
