@@ -8,11 +8,11 @@ object $name;format="space,Camel"$ServerPlugin extends AutoPlugin {
 
   import autoImport._
 
-  val base$name;format="space,Camel"$ProjectSettings: Seq[Def.Setting[_]] = Seq()
+  val baseProjectSettings: Seq[Def.Setting[_]] = Seq()
 
   override val trigger = noTrigger
 
   override val requires: Plugins = ScaffoldPlugin
 
-  override lazy val projectSettings: Seq[Def.Setting[_]] = base$name;format="space,Camel"$ProjectSettings
+  override lazy val projectSettings: Seq[Def.Setting[_]] = baseProjectSettings
 }

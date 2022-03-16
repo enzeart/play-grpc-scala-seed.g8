@@ -86,7 +86,7 @@ object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
     }
   }
 
-  val base$name;format="space,Camel"$ProjectSettings: Seq[Def.Setting[_]] = Seq(
+  val baseProjectSettings: Seq[Def.Setting[_]] = Seq(
     $name;format="space,camel"$SlickCodegenAdditionalClasspath := Seq.empty,
     $name;format="space,camel"$SlickCodegenJdbcDriver := "org.postgresql.Driver",
     $name;format="space,camel"$SlickCodegenProfile := "$package$.db_profile.CustomPostgresProfile",
@@ -103,5 +103,5 @@ object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
 
   override val requires: Plugins = ScaffoldPlugin
 
-  override lazy val projectSettings: Seq[Def.Setting[_]] = base$name;format="space,Camel"$ProjectSettings
+  override lazy val projectSettings: Seq[Def.Setting[_]] = baseProjectSettings
 }
