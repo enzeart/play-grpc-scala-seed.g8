@@ -81,7 +81,7 @@ object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
         .foreach(sys error _.getMessage)
 
       Def.task {
-        (outputDir / pkg).listFiles().toSeq
+        (outputDir / pkg.replace('.', '/')).listFiles().toSeq
       }
     }
   }

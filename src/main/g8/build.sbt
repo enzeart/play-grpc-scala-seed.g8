@@ -55,6 +55,7 @@ lazy val `$name;format="norm"$-db` = (project in file("$name;format="norm"$-db")
     name := "$name;format="norm"$-db",
     $name;format="space,camel"$SlickCodegenAdditionalClasspath += (`$name;format="norm"$-db-profile` / Compile / classDirectory).value,
     $name;format="space,camel"$SlickCodegenAdditionalClasspath ++= (Compile / resourceDirectories).value,
+    Compile / sourceGenerators += $name;format="space,camel"$SlickCodegen.taskValue,
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8"
   )
 
