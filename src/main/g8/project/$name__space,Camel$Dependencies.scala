@@ -43,6 +43,8 @@ object $name;format="space,Camel"$Dependencies {
 
   val slickPg: ModuleID = "com.github.tminglei" %% "slick-pg" % "$slick_pg_version$"
 
+  val slickHikaricp: ModuleID = "com.typesafe.slick" %% "slick-hikaricp" % slickVersion
+
   val protobufDependencies: Seq[ModuleID] = Seq(
     playGrpcRuntime,
     scalapbValidateCore,
@@ -69,7 +71,7 @@ object $name;format="space,Camel"$Dependencies {
   )
 
   val coreDependencies: Seq[ModuleID] = Seq(
-
+    slickHikaricp % Test
   )
 
   val coreDependencyOverrides: Seq[ModuleID] = Seq(
@@ -80,7 +82,8 @@ object $name;format="space,Camel"$Dependencies {
     guice,
     pureconfig,
     scalaGuice,
-    scalatestplusPlay
+    scalatestplusPlay,
+    slickHikaricp
   )
 
   val serverDependencyOverrides: Seq[ModuleID] = Seq(
