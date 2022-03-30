@@ -1,5 +1,10 @@
 package $package$.db_profile
 import com.github.tminglei.slickpg._
+import slick.jdbc.{GetResult, PositionedResult}
+
+import java.time.{Duration, LocalDate, LocalDateTime, LocalTime, OffsetDateTime, OffsetTime}
+import java.util.UUID
+import scala.reflect.classTag
 
 trait CustomPostgresProfile
     extends ExPostgresProfile
@@ -15,10 +20,10 @@ trait CustomPostgresProfile
   override protected def computeCapabilities: Set[slick.basic.Capability] =
     super.computeCapabilities + slick.jdbc.JdbcCapabilities.insertOrUpdate
 
-  override val api: API = MyAPI
+  override val api: API = CustomAPI
 
-  object MyAPI
-      extends API
+  object CustomAPI
+      extends super.API
       with ArrayImplicits
       with DateTimeImplicits
       with NetImplicits
@@ -26,8 +31,23 @@ trait CustomPostgresProfile
       with RangeImplicits
       with HStoreImplicits
       with SearchImplicits
-      with SearchAssistants
+      with SearchAssistants {
+
+    implicit object GetUuid extends GetResult[UUID] {
+      override def apply(p: PositionedResult): UUID = UUID.fromString(p.nextString())
+    }
+  }
 
 }
 
-object CustomPostgresProfile extends CustomPostgresProfile
+object CustomPostgresProfile extends CustomPostgresProfile {
+
+  bindPgDateTypesToScala(
+    classTag[LocalDate],
+    classTag[LocalTime],
+    classTag[LocalDateTime],
+    classTag[OffsetTime],
+    classTag[OffsetDateTime],
+    classTag[Duration]
+  )
+}
