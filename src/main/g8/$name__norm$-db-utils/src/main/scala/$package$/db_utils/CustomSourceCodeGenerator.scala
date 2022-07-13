@@ -6,9 +6,9 @@ import slick.sql.SqlProfile.ColumnOption
 
 class CustomSourceCodeGenerator(model: Model) extends SourceCodeGenerator(model) {
 
-  override def Table = new Table(_) { table =>
+  override def Table: slick.model.Table => TableDef = new Table(_) { table =>
 
-    override def Column = new Column(_) { column =>
+    override def Column: slick.model.Column => ColumnDef = new Column(_) { column =>
 
       override def rawType: String = {
         model.options
