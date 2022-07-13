@@ -19,6 +19,8 @@ object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
     val $name;format="space,camel"$SlickCodegenPackage = settingKey[String]("The package used for generated Slick code")
     val $name;format="space,camel"$SlickCodegenOutputDir =
       settingKey[File]("The output directory where generated Slick code is stored")
+    val $name;format="space,camel"$SlickCodegenSourceGeneratorEntryPoint =
+      settingKey[String]("The FQCN of the Slick source code generator entrypoint")
     val $name;format="space,camel"$SlickCodegenSourceGeneratorClass =
       settingKey[String]("The FQCN of the Slick source code generator class")
     val $name;format="space,camel"$SlickCodegenOutputToMultipleFiles =
@@ -92,7 +94,8 @@ object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
     $name;format="space,camel"$SlickCodegenProfile := "$package$.db_utils.CustomPostgresProfile",
     $name;format="space,camel"$SlickCodegenPackage := "$package$.db",
     $name;format="space,camel"$SlickCodegenOutputDir := (Compile / sourceManaged).value,
-    $name;format="space,camel"$SlickCodegenSourceGeneratorClass := "slick.codegen.SourceCodeGenerator",
+    $name;format="space,camel"$SlickCodegenSourceGeneratorEntryPoint := "slick.codegen.SourceCodeGenerator",
+    $name;format="space,camel"$SlickCodegenSourceGeneratorClass := "$package$.db_utils.CustomSourceCodeGenerator",
     $name;format="space,camel"$SlickCodegenOutputToMultipleFiles := true,
     $name;format="space,camel"$SlickCodegenIgnoreInvalidDefaults := true,
     $name;format="space,camel"$SlickCodegenDatabaseDockerImage := "postgres:latest",
