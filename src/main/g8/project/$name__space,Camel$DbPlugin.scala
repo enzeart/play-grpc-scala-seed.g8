@@ -89,7 +89,7 @@ object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
   val baseProjectSettings: Seq[Def.Setting[_]] = Seq(
     $name;format="space,camel"$SlickCodegenAdditionalClasspath := Seq.empty,
     $name;format="space,camel"$SlickCodegenJdbcDriver := "org.postgresql.Driver",
-    $name;format="space,camel"$SlickCodegenProfile := "$package$.db_profile.CustomPostgresProfile",
+    $name;format="space,camel"$SlickCodegenProfile := "$package$.db_utils.CustomPostgresProfile",
     $name;format="space,camel"$SlickCodegenPackage := "$package$.db",
     $name;format="space,camel"$SlickCodegenOutputDir := (Compile / sourceManaged).value,
     $name;format="space,camel"$SlickCodegenSourceGeneratorClass := "slick.codegen.SourceCodeGenerator",

@@ -9,7 +9,7 @@ lazy val `$name;format="norm"$` = (project in file("."))
     `$name;format="norm"$-protobuf`,
     `$name;format="norm"$-core`,
     `$name;format="norm"$-server`,
-    `$name;format="norm"$-db-profile`,
+    `$name;format="norm"$-db-utils`,
     `$name;format="norm"$-db`
   )
   .settings(
@@ -40,20 +40,20 @@ lazy val `$name;format="norm"$-protobuf` = (project in file("$name;format="norm"
       .ManifestAttributes("ScalaPB-Options-Proto" -> "$package;format="packaged"$/grpc/$name;format="snake"$_service_options.proto")
   )
 
-lazy val `$name;format="norm"$-db-profile` = (project in file("$name;format="norm"$-db-profile"))
+lazy val `$name;format="norm"$-db-utils` = (project in file("$name;format="norm"$-db-utils"))
   .settings(
-    name := "$name;format="norm"$-db-profile",
+    name := "$name;format="norm"$-db-utils",
     libraryDependencies ++= $name;format="space,Camel"$Dependencies.dbDependencies,
     dependencyOverrides ++= $name;format="space,Camel"$Dependencies.dbDependencyOverrides,
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8"
   )
 
 lazy val `$name;format="norm"$-db` = (project in file("$name;format="norm"$-db"))
-  .dependsOn(`$name;format="norm"$-db-profile`)
+  .dependsOn(`$name;format="norm"$-db-utils`)
   .enablePlugins($name;format="space,Camel"$DbPlugin)
   .settings(
     name := "$name;format="norm"$-db",
-    $name;format="space,camel"$SlickCodegenAdditionalClasspath += (`$name;format="norm"$-db-profile` / Compile / classDirectory).value,
+    $name;format="space,camel"$SlickCodegenAdditionalClasspath += (`$name;format="norm"$-db-utils` / Compile / classDirectory).value,
     $name;format="space,camel"$SlickCodegenAdditionalClasspath ++= (Compile / resourceDirectories).value,
     Compile / sourceGenerators += $name;format="space,camel"$SlickCodegen.taskValue,
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8"

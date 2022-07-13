@@ -1,7 +1,7 @@
 package modules
 
 import com.google.inject.{AbstractModule, Provides}
-import $package$.db_profile.CustomPostgresProfile
+import $package$.db_utils.CustomPostgresProfile
 import net.codingwell.scalaguice.ScalaModule
 import play.api.Configuration
 import slick.basic.DatabaseConfig

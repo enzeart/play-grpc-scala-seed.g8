@@ -1,4 +1,4 @@
-package $package$.db_profile
+package $package$.db_utils
 import com.github.tminglei.slickpg._
 import slick.jdbc.{GetResult, PositionedResult}
 
