@@ -34,45 +34,45 @@ class CustomSourceCodeGenerator(model: Model) extends SourceCodeGenerator(model)
 
   override def packageCode(profile: String, pkg: String, container: String, parentType: Option[String]): String = {
     s"""
-       |package $pkg
+       |package \$pkg
        |// AUTO-GENERATED Slick data model
        |/** Stand-alone Slick data model for immediate use */
-       |object $container extends {
-       |  val profile = $profile
-       |} with $container
+       |object \$container extends {
+       |  val profile = \$profile
+       |} with \$container
        |
        |/** Slick data model trait for extension, choice of backend or usage in the cake pattern. (Make sure to initialize this late.) */
-       |trait $container${parentType.map(t => s" extends $t").getOrElse("")} {
-       |  val profile: $profile
+       |trait \$container\${parentType.map(t => s" extends \$t").getOrElse("")} {
+       |  val profile: \$profile
        |  import profile.api._
-       |  ${indent(code)}
+       |  \${indent(code)}
        |}
        |""".stripMargin
   }
 
   protected def handleQuotedNamed(tableName: String): String = {
-    if (tableName.endsWith("`")) s"${tableName.init}Table`" else s"${tableName}Table"
+    if (tableName.endsWith("`")) s"\${tableName.init}Table`" else s"\${tableName}Table"
   }
 
   override def packageContainerCode(profile: String, pkg: String, container: String): String = {
     val mixinCode =
-      codePerTable.keys.map(tableName => s"${handleQuotedNamed(tableName)}").mkString("extends ", " with ", "")
+      codePerTable.keys.map(tableName => s"\${handleQuotedNamed(tableName)}").mkString("extends ", " with ", "")
 
     s"""
-       |package $pkg
+       |package \$pkg
        |// AUTO-GENERATED Slick data model
        |/** Stand-alone Slick data model for immediate use */
-       |object $container extends {
-       |  val profile = $profile
-       |} with $container
+       |object \$container extends {
+       |  val profile = \$profile
+       |} with \$container
        |
        |/** Slick data model trait for extension, choice of backend or usage in the cake pattern. (Make sure to initialize this late.)
        |    Each generated XXXXTable trait is mixed in this trait hence allowing access to all the TableQuery lazy vals.
        |  */
-       |trait $container${parentType.map(t => s" extends $t").getOrElse("")} $mixinCode {
-       |  val profile: $profile
+       |trait \$container\${parentType.map(t => s" extends \$t").getOrElse("")} \$mixinCode {
+       |  val profile: \$profile
        |  import profile.api._
-       |  ${indent(codeForContainer)}
+       |  \${indent(codeForContainer)}
        |
        |}
        |""".stripMargin
