@@ -35,16 +35,17 @@ object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
   import autoImport._
 
   val $name;format="space,camel"$SlickCodegenTask = Def.taskDyn {
-    val additionalClasspath   = (Compile / $name;format="space,camel"$SlickCodegenAdditionalClasspath).value
-    val jdbcDriver            = (Compile / $name;format="space,camel"$SlickCodegenJdbcDriver).value
-    val profile               = (Compile / $name;format="space,camel"$SlickCodegenProfile).value
-    val pkg                   = (Compile / $name;format="space,camel"$SlickCodegenPackage).value
-    val outputDir             = (Compile / $name;format="space,camel"$SlickCodegenOutputDir).value
-    val sourceGeneratorClass  = (Compile / $name;format="space,camel"$SlickCodegenSourceGeneratorClass).value
-    val outputToMultipleFiles = (Compile / $name;format="space,camel"$SlickCodegenOutputToMultipleFiles).value.toString
-    val ignoreInvalidDefaults = (Compile / $name;format="space,camel"$SlickCodegenIgnoreInvalidDefaults).value.toString
-    val databaseDockerImage   = (Compile / $name;format="space,camel"$SlickCodegenDatabaseDockerImage).value
-    val classpath             = (Compile / dependencyClasspath).value.files ++ additionalClasspath
+    val additionalClasspath       = (Compile / $name;format="space,camel"$SlickCodegenAdditionalClasspath).value
+    val jdbcDriver                = (Compile / $name;format="space,camel"$SlickCodegenJdbcDriver).value
+    val profile                   = (Compile / $name;format="space,camel"$SlickCodegenProfile).value
+    val pkg                       = (Compile / $name;format="space,camel"$SlickCodegenPackage).value
+    val outputDir                 = (Compile / $name;format="space,camel"$SlickCodegenOutputDir).value
+    val sourceGeneratorEntryPoint = (Compile / $name;format="space,camel"$SlickCodegenSourceGeneratorEntryPoint).value
+    val sourceGeneratorClass      = (Compile / $name;format="space,camel"$SlickCodegenSourceGeneratorClass).value
+    val outputToMultipleFiles     = (Compile / $name;format="space,camel"$SlickCodegenOutputToMultipleFiles).value.toString
+    val ignoreInvalidDefaults     = (Compile / $name;format="space,camel"$SlickCodegenIgnoreInvalidDefaults).value.toString
+    val databaseDockerImage       = (Compile / $name;format="space,camel"$SlickCodegenDatabaseDockerImage).value
+    val classpath                 = (Compile / dependencyClasspath).value.files ++ additionalClasspath
 
     Using.resources(
       new PostgreSQLContainer(databaseDockerImage),
@@ -63,7 +64,7 @@ object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
 
       runner.value
         .run(
-          sourceGeneratorClass,
+          sourceGeneratorEntryPoint,
           classpath,
           Array(
             profile,
