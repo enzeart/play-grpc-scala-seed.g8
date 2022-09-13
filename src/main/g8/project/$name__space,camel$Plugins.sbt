@@ -20,7 +20,6 @@ libraryDependencies ++= Seq(
 // Database
 libraryDependencies ++= Seq(
   "org.flywaydb"       % "flyway-core"    % "$flyway_version$",
-  "org.testcontainers" % "testcontainers" % "$testcontainers_version$",
-  "org.testcontainers" % "postgresql"     % "$testcontainers_postgresql_version$",
+  "com.dimafeng" %% "testcontainers-scala-postgresql" % "$testcontainers_scala_version$",
   "org.postgresql"     % "postgresql"     % "$postgresql_version$"
 )

@@ -1,6 +1,7 @@
+import com.dimafeng.testcontainers.PostgreSQLContainer
 import giter8.ScaffoldPlugin
 import org.flywaydb.core.Flyway
-import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.utility.DockerImageName
 import sbt.Keys._
 import sbt._
 
@@ -48,17 +49,14 @@ object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
     val classpath                 = (Compile / dependencyClasspath).value.files ++ additionalClasspath
 
     Using.resources(
-      new PostgreSQLContainer(databaseDockerImage),
+      PostgreSQLContainer(DockerImageName.parse(databaseDockerImage)),
       new URLClassLoader(classpath.map(_.asURL), $name;format="space,Camel"$DbPlugin.getClass.getClassLoader)
     ) { (databaseContainer, classLoader) =>
-      databaseContainer.withDatabaseName("$name;format="norm"$")
-      databaseContainer.withUsername(UUID.randomUUID().toString)
-      databaseContainer.withPassword(UUID.randomUUID().toString)
       databaseContainer.start()
 
-      val jdbcUrl  = databaseContainer.getJdbcUrl
-      val username = databaseContainer.getUsername
-      val password = databaseContainer.getPassword
+      val jdbcUrl  = databaseContainer.jdbcUrl
+      val username = databaseContainer.username
+      val password = databaseContainer.password
 
       Flyway.configure(classLoader).dataSource(jdbcUrl, username, password).load().migrate()
 
