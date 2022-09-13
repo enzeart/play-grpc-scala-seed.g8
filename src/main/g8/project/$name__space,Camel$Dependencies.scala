@@ -45,6 +45,17 @@ object $name;format="space,Camel"$Dependencies {
 
   val slickHikaricp: ModuleID = "com.typesafe.slick" %% "slick-hikaricp" % slickVersion
 
+  // Test
+  val testcontainersScalaVersion = "$testcontainers_scala_version$"
+
+  val scalatest: ModuleID = "org.scalatest" %% "scalatest" % "$scalatest_version$" % Test
+
+  val testcontainersScalaScalatest = "com.dimafeng" %% "testcontainers-scala-scalatest" % testcontainersScalaVersion % Test
+
+  val testcontainersScalaPostgresql = "com.dimafeng" %% "testcontainers-scala-postgresql" % testcontainersScalaVersion % Test
+
+  val flywayCore: ModuleID = "org.flywaydb" % "flyway-core" % "$flyway_version$" % Test
+
   val protobufDependencies: Seq[ModuleID] = Seq(
     playGrpcRuntime,
     scalapbValidateCore,
@@ -71,7 +82,11 @@ object $name;format="space,Camel"$Dependencies {
   )
 
   val coreDependencies: Seq[ModuleID] = Seq(
-    slickHikaricp % Test
+    slickHikaricp % Test,
+    scalatest,
+    testcontainersScalaScalatest,
+    testcontainersScalaPostgresql,
+    flywayCore
   )
 
   val coreDependencyOverrides: Seq[ModuleID] = Seq(
