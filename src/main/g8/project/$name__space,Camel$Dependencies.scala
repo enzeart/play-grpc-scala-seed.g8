@@ -67,7 +67,7 @@ object $name;format="space,Camel"$Dependencies {
     scalapbRuntime
   )
 
-  val protobufServiceDependencies: Seq[ModuleID] = Seq(
+  val protobufServiceDependencies: Seq[ModuleID] = Seq[ModuleID](
 
   ).map(_  % ProtobufSrcConfig intransitive())
 
