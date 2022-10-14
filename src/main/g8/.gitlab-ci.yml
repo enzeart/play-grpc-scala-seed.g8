@@ -22,9 +22,15 @@ build-docker-image:
     - amazon-linux-extras install docker
     - aws --version
     - docker --version
-    - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain \$AWS_CODEARTIFACT_DOMAIN --domain-owner \$AWS_CODEARTIFACT_DOMAIN_OWNER --query authorizationToken --output text`
   script:
+    $if(codeartifact_support_enabled.truthy)$
+    -> docker build -t \$DOCKER_REPOSITORY_URI:latest -t \$DOCKER_REPOSITORY_URI:\$CI_COMMIT_TAG --network=host
+        --build-arg AWS_ACCESS_KEY_ID=\$AWS_ACCESS_KEY_ID
+        --build-arg AWS_SECRET_ACCESS_KEY=\$AWS_SECRET_ACCESS_KEY
+        --build-arg AWS_REGION=\$AWS_REGION .
+    $else$
     - docker build -t \$DOCKER_REPOSITORY_URI:latest -t \$DOCKER_REPOSITORY_URI:\$CI_COMMIT_TAG --network=host .
+    $endif$
     - aws ecr get-login-password | docker login --username AWS --password-stdin \$DOCKER_REGISTRY
     - docker push \$DOCKER_REPOSITORY_URI:latest
     - docker push \$DOCKER_REPOSITORY_URI:\$CI_COMMIT_TAG
@@ -42,9 +48,12 @@ build-protobuf-idl:
     - rm -f /etc/yum.repos.d/bintray-rpm.repo || true
     - curl -L https://www.scala-sbt.org/sbt-rpm.repo > sbt-rpm.repo
     - mv sbt-rpm.repo /etc/yum.repos.d/
-    - yum install sbt
-    - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain \$AWS_CODEARTIFACT_DOMAIN --domain-owner \$AWS_CODEARTIFACT_DOMAIN_OWNER --query authorizationToken --output text`
+    - yum -y install java-1.8.0-openjdk.x86_64 sbt
   script:
+    $if(codeartifact_support_enabled.truthy)$
+    - sbt $name;format="norm"$-protobuf/codeArtifactPublish
+    $else$
     - sbt $name;format="norm"$-protobuf/publish
+    $endif$
   when: manual
 
