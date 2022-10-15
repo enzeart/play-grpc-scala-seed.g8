@@ -23,3 +23,8 @@ libraryDependencies ++= Seq(
   "com.dimafeng" %% "testcontainers-scala-postgresql" % "$testcontainers_scala_version$",
   "org.postgresql"     % "postgresql"     % "$postgresql_version$"
 )
+
+$if(codeartifact_support_enabled.truthy)$
+// AWS CodeArtifact Support
+addSbtPlugin("io.github.bbstilson" % "sbt-codeartifact" % "$sbt_codeartifact_version$")
+$endif$
