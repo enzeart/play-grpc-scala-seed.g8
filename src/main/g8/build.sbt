@@ -1,5 +1,4 @@
 import play.grpc.gen.scaladsl._
-import scalapb.GeneratorOption._
 import play.sbt.PlayImport.PlayKeys._
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
@@ -75,9 +74,7 @@ lazy val `$name;format="norm"$-core` = (project in file("$name;format="norm"$-co
     dependencyOverrides ++= $name;format="space,Camel"$Dependencies.protobufDependencyOverrides,
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8",
     akkaGrpcExtraGenerators ++= Seq(PlayScalaClientCodeGenerator),
-    akkaGrpcGeneratedSources := Seq(AkkaGrpc.Client),
-    Compile / PB.targets += scalapb.validate
-      .gen(FlatPackage) -> (Compile / akkaGrpcCodeGeneratorSettings / target).value
+    akkaGrpcGeneratedSources := Seq(AkkaGrpc.Client)
   )
 
 lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-server"))
@@ -101,8 +98,6 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
     akkaGrpcExtraGenerators ++= Seq(PlayScalaServerCodeGenerator),
     akkaGrpcGeneratedSources := Seq(AkkaGrpc.Server),
     Compile / PB.protoSources += (`$name;format="norm"$-protobuf` / sourceDirectory).value / "main" / "protobuf",
-    Compile / PB.targets += scalapb.validate
-      .gen(FlatPackage) -> (Compile / akkaGrpcCodeGeneratorSettings / target).value,
     devSettings ++= Seq(
       "play.server.http.port" -> "$app_port$"
     ),
