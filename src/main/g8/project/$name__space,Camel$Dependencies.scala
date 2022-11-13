@@ -16,14 +16,9 @@ object $name;format="space,Camel"$Dependencies {
   //  Protobuf
   val playGrpcRuntime: ModuleID = "com.lightbend.play" %% "play-grpc-runtime" % "$play_grpc_runtime_version$"
 
-  val scalapbLenses: ModuleID = "com.thesamet.scalapb" %% "lenses" % "$scalapb_lenses_version$"
+  val scalapbRuntime: ModuleID = "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion
 
-  val scalapbRuntime: ModuleID = "com.thesamet.scalapb" %% "scalapb-runtime" % "$scalapb_runtime_version$"
-
-  val scalapbValidateCore: ModuleID =
-    "com.thesamet.scalapb" %% "scalapb-validate-core" % scalapb.validate.compiler.BuildInfo.version
-
-  val scalapbValidateCoreProtobuf: ModuleID = scalapbValidateCore % ProtobufConfig
+  val scalapbRuntimeProtobuf: ModuleID = scalapbRuntime % ProtobufConfig
 
   // Akka
   val akkaDiscovery: ModuleID = "com.typesafe.akka" %% "akka-discovery" % PlayVersion.akkaVersion
@@ -58,13 +53,10 @@ object $name;format="space,Camel"$Dependencies {
 
   val protobufDependencies: Seq[ModuleID] = Seq(
     playGrpcRuntime,
-    scalapbValidateCore,
-    scalapbValidateCoreProtobuf
+    scalapbRuntimeProtobuf
   )
 
-  val protobufDependencyOverrides: Seq[ModuleID] = Seq(
-    scalapbLenses,
-    scalapbRuntime
+  val protobufDependencyOverrides: Seq[ModuleID] = Seq[ModuleID](
   )
 
   val protobufServiceDependencies: Seq[ModuleID] = Seq[ModuleID](

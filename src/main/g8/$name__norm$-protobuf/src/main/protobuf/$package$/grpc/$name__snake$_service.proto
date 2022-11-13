@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package $package$.grpc;
 
-import "validate/validate.proto";
-
 option java_multiple_files = true;
 option java_package = "$package$.grpc";
 option java_outer_classname = "$name;format="space,Camel"$ServiceProto";
@@ -13,9 +11,9 @@ service $name;format="space,Camel"$Service {
 }
 
 message EchoRequest {
-    string message = 1 [(validate.rules).string.max_len = 9];
+    string message = 1;
 }
 
 message EchoReply {
-    string message = 1 [(validate.rules).string.max_len = 7];
+    string message = 1;
 }
