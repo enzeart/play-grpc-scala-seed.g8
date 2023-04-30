@@ -25,6 +25,7 @@ EOF
 
 $if(codeartifact_support_enabled.truthy)$
 ## AWS CodeArtifact Support
+
 AWS CodeArtifact support is provided by the [sbt-codeartifact](https://github.com/bbstilson/sbt-codeartifact)
 plugin. Take a look at the documentation for detailed information on how it works and
 how it is configured.
@@ -34,5 +35,32 @@ access your repository. The easiest option is to configure the default profiles 
 and ~/.aws/credentials files. If you'd prefer to take a different approach, consult the documentation for your IDE,
 sbt-codeartifact, and AWS to see if there is a more suitable solution for your needs.
 
-
 $endif$
+
+## Frameworks and Tools
+
+This project uses several frameworks and tools to implement its core features. Please see the below
+documentation for more information.
+
+### HTTP
+
+The application server is [Play Framework](https://www.playframework.com/).
+
+### Dependency Injection
+
+Dependency injection is provided by [Guice](https://github.com/google/guice/wiki/GettingStarted) with scala extensions
+provided by [ScalaGuice](https://github.com/codingwell/scala-guice).
+
+### gPRC
+
+gRPC supports is provided by [Play gRPC](https://github.com/playframework/play-grpc/blob/main/docs/src/main/paradox/play/index.md)
+which is built on top of [Akka gRPC](https://doc.akka.io/docs/akka-grpc/2.1/overview.html).
+
+### Database
+
+Programmatic database access is provided by [Slick](https://scala-slick.org/).
+Database schema management capabilities are provided by [Flyway](https://flywaydb.org/).
+
+### Build Tool
+
+[sbt](https://www.scala-sbt.org/) is the project's primary build tool.
