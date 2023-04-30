@@ -1,3 +1,3 @@
 package config
 
-case class AppConfig(placeholder: Option[String])
+case class AppConfig()
