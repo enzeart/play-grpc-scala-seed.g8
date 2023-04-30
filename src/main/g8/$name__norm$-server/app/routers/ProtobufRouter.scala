@@ -3,13 +3,13 @@ package routers
 import akka.actor.ActorSystem
 import akka.grpc.scaladsl.Metadata
 import $package$.grpc.{Abstract$name;format="space,Camel"$ServicePowerApiRouter, EchoReply, EchoRequest}
-import config.AppConfig
+import config.AppServerConfig
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ProtobufRouter @Inject() (appConfig: AppConfig)(
+class ProtobufRouter @Inject() (appServerConfig: AppServerConfig)(
     implicit actorSystem: ActorSystem,
     executionContext: ExecutionContext
 ) extends Abstract$name;format="space,Camel"$ServicePowerApiRouter(actorSystem) {
