@@ -102,5 +102,6 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
       "play.server.http.port" -> "$app_port$"
     ),
     Universal / packageName := name.value,
-    topLevelDirectory := Some(packageName.value)
+    topLevelDirectory := Some(packageName.value),
+    $name;format="space,camel"$AppFlywayAdditionalClasspath += baseDirectory.value / "dummy-data"
   )
