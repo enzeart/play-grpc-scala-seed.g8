@@ -14,5 +14,5 @@ class DatabaseModule extends AbstractModule with ScalaModule {
 
   @Provides @Singleton
   def provideDatabaseConfig(configuration: Configuration): DatabaseConfig[CustomPostgresProfile] =
-    DatabaseConfig.forConfig(path = "app.database.postgresql", config = configuration.underlying)
+    DatabaseConfig.forConfig(path = "app-server.app.database.postgresql", config = configuration.underlying)
 }
