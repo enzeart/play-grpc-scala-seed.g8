@@ -13,7 +13,7 @@ object $name;format="space,Camel"$ServerPlugin extends AutoPlugin {
 
   object autoImport {
     val $name;format="space,camel"$AppDatabaseDockerImage =
-      settingKey[String]("The database Docker image to use while running the application in development mode")
+      settingKey[String]("The Docker database image to use while running the application in development mode")
     val $name;format="space,camel"$AppFlywayAdditionalClasspath =
       settingKey[Seq[File]]("Additional classpath entries for configuring Flyway")
     val $name;format="space,camel"$AppStart = inputKey[Unit]("Start the application in development mode")
