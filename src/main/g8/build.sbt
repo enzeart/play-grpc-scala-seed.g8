@@ -2,6 +2,7 @@ import play.grpc.gen.scaladsl._
 import play.sbt.PlayImport.PlayKeys._
 import com.dimafeng.testcontainers.PostgreSQLContainer
 import org.testcontainers.utility.DockerImageName
+import $name;format="space,Camel"$Keys._
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
