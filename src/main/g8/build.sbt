@@ -1,5 +1,7 @@
 import play.grpc.gen.scaladsl._
 import play.sbt.PlayImport.PlayKeys._
+import com.dimafeng.testcontainers.PostgreSQLContainer
+import org.testcontainers.utility.DockerImageName
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -102,5 +104,24 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
       "play.server.http.port" -> "$app_port$"
     ),
     Universal / packageName := name.value,
-    topLevelDirectory := Some(packageName.value)
+    topLevelDirectory := Some(packageName.value),
+    Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer := {
+      val container = PostgreSQLContainer(DockerImageName.parse("postgres:latest"))
+      container.start()
+      container
+    },
+    Compile / fork := true,
+    Compile / javaOptions ++= {
+      val container = (Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer).value
+      Seq(
+        s"-Dapp-server.app.database.postgresql.db.properties.url=\${container.jdbcUrl}&stringtype=unspecified",
+        s"-Dapp-server.app.database.postgresql.db.properties.user=\${container.username}",
+        s"-Dapp-server.app.database.postgresql.db.properties.password=\${container.password}"
+      )
+    },
+    playRunHooks += {
+      val classpath = (Compile / dependencyClasspath).value.files :+ (baseDirectory.value / "dummy-data")
+      val container = (Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer).value
+      DevelopmentDatabaseHook(classpath, container)
+    },
   )
