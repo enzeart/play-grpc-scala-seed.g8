@@ -18,8 +18,6 @@ object $name;format="space,Camel"$Keys {
     settingKey[Boolean]("Output generated Slick code to multiple files?")
   val $name;format="space,camel"$SlickCodegenIgnoreInvalidDefaults =
     settingKey[Boolean]("Ignore invalid default values for generated Slick code?")
-  val $name;format="space,camel"$SlickCodegenDatabaseDockerImage =
-    settingKey[String]("The database Docker image to use for Slick code generation")
   val $name;format="space,camel"$SlickCodegen = taskKey[Seq[File]]("Generate Slick code based on Flyway migrations")
   val $name;format="space,camel"$DevelopmentPostgresqlContainer =
       taskKey[PostgreSQLContainer]("PostgreSQL container for development purposes")

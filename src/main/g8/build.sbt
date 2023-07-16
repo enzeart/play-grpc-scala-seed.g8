@@ -20,6 +20,11 @@ lazy val `$name;format="norm"$` = (project in file("."))
         version := "0.0.0",
         organization := "$organization$",
         scalaVersion := "$scala_version$",
+        $name;format="space,camel"$DevelopmentPostgresqlContainer := {
+          val container = PostgreSQLContainer(DockerImageName.parse("postgres:latest"))
+          container.start()
+          container
+        },
         $if(codeartifact_support_enabled.truthy)$
         codeArtifactUrl := "$codeartifact_url$"
         $endif$
@@ -106,11 +111,6 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
     ),
     Universal / packageName := name.value,
     topLevelDirectory := Some(packageName.value),
-    Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer := {
-      val container = PostgreSQLContainer(DockerImageName.parse("postgres:latest"))
-      container.start()
-      container
-    },
     Compile / fork := true,
     Compile / javaOptions ++= {
       val container = (Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer).value

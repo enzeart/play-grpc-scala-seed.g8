@@ -1,14 +1,7 @@
-import com.dimafeng.testcontainers.PostgreSQLContainer
+import $name;format="space,Camel"$Keys._
 import giter8.ScaffoldPlugin
-import org.flywaydb.core.Flyway
-import org.testcontainers.utility.DockerImageName
 import sbt.Keys._
 import sbt._
-
-import java.util.UUID
-import scala.reflect.internal.util.ScalaClassLoader.URLClassLoader
-import scala.util.Using
-import $name;format="space,Camel"$Keys._
 
 object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
 
@@ -22,45 +15,34 @@ object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
     val sourceGeneratorClass      = (Compile / $name;format="space,camel"$SlickCodegenSourceGeneratorClass).value
     val outputToMultipleFiles     = (Compile / $name;format="space,camel"$SlickCodegenOutputToMultipleFiles).value.toString
     val ignoreInvalidDefaults     = (Compile / $name;format="space,camel"$SlickCodegenIgnoreInvalidDefaults).value.toString
-    val databaseDockerImage       = (Compile / $name;format="space,camel"$SlickCodegenDatabaseDockerImage).value
+    val databaseContainer         = (Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer).value
     val classpath                 = (Compile / dependencyClasspath).value.files ++ additionalClasspath
 
-    Using.resources(
-      PostgreSQLContainer(DockerImageName.parse(databaseDockerImage)),
-      new URLClassLoader(classpath.map(_.asURL), $name;format="space,Camel"$DbPlugin.getClass.getClassLoader)
-    ) { (databaseContainer, classLoader) =>
-      databaseContainer.start()
+    FlywayMigration(PlayGrpcTest4DbPlugin.getClass.getClassLoader, classpath, databaseContainer)
 
-      val jdbcUrl  = databaseContainer.jdbcUrl
-      val username = databaseContainer.username
-      val password = databaseContainer.password
+    runner.value
+      .run(
+        sourceGeneratorEntryPoint,
+        classpath,
+        Array(
+          profile,
+          jdbcDriver,
+          databaseContainer.jdbcUrl,
+          outputDir.getPath,
+          pkg,
+          databaseContainer.username,
+          databaseContainer.password,
+          ignoreInvalidDefaults,
+          sourceGeneratorClass,
+          outputToMultipleFiles
+        ),
+        streams.value.log
+      )
+      .failed
+      .foreach(sys error _.getMessage)
 
-      Flyway.configure(classLoader).dataSource(jdbcUrl, username, password).load().migrate()
-
-      runner.value
-        .run(
-          sourceGeneratorEntryPoint,
-          classpath,
-          Array(
-            profile,
-            jdbcDriver,
-            jdbcUrl,
-            outputDir.getPath,
-            pkg,
-            username,
-            password,
-            ignoreInvalidDefaults,
-            sourceGeneratorClass,
-            outputToMultipleFiles
-          ),
-          streams.value.log
-        )
-        .failed
-        .foreach(sys error _.getMessage)
-
-      Def.task {
-        (outputDir / pkg.replace('.', '/')).listFiles().toSeq
-      }
+    Def.task {
+      (outputDir / pkg.replace('.', '/')).listFiles().toSeq
     }
   }
 
@@ -74,7 +56,6 @@ object $name;format="space,Camel"$DbPlugin extends AutoPlugin {
     $name;format="space,camel"$SlickCodegenSourceGeneratorClass := "$package$.db_utils.CustomSourceCodeGenerator",
     $name;format="space,camel"$SlickCodegenOutputToMultipleFiles := true,
     $name;format="space,camel"$SlickCodegenIgnoreInvalidDefaults := true,
-    $name;format="space,camel"$SlickCodegenDatabaseDockerImage := "postgres:latest",
     $name;format="space,camel"$SlickCodegen := $name;format="space,camel"$SlickCodegenTask.value
   )
 
