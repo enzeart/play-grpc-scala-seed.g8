@@ -65,21 +65,22 @@ lazy val `$name;format="norm"$-db` = (project in file("$name;format="norm"$-db")
   .settings(
     name := "$name;format="norm"$-db",
      Compile / sourceGenerators += Def.task {
+      val classpath = Seq.newBuilder[File]
+      classpath ++= (Compile / dependencyClasspath).value.files
+      classpath ++= (Compile / resourceDirectories).value
+      classpath += (`$name;format="norm"$-db-utils` / Compile / classDirectory).value
       SlickSourceGenerator(
         runner = runner.value,
         mainClass = "slick.codegen.SourceCodeGenerator",
         classLoader = $name;format="space,Camel"$DbPlugin.getClass.getClassLoader,
-        classpath =
-          (Compile / dependencyClasspath).value.files ++ (Compile / resourceDirectories).value :+ (`$name;format="norm"$-db-utils` / Compile / classDirectory).value,
-        params = SlickSourceCodeGeneratorParams(
-          profile = "$package$.db_utils.CustomPostgresProfile",
-          jdbcDriver = "org.postgresql.Driver",
-          outputDir = (Compile / sourceManaged).value,
-          pkg = "$package$.db",
-          ignoreInvalidDefaults = true,
-          codeGeneratorClass = "$package$.db_utils.CustomSourceCodeGenerator",
-          outputToMultipleFiles = true
-        ),
+        classpath = classpath.result(),
+        profile = "$package$.db_utils.CustomPostgresProfile",
+        jdbcDriver = "org.postgresql.Driver",
+        outputDir = (Compile / sourceManaged).value,
+        pkg = "$package$.db",
+        ignoreInvalidDefaults = true,
+        codeGeneratorClass = "$package$.db_utils.CustomSourceCodeGenerator",
+        outputToMultipleFiles = true,
         log = streams.value.log,
         databaseContainer = (Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer).value
       )

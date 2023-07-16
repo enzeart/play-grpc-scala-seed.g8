@@ -1,16 +1,6 @@
 import com.dimafeng.testcontainers.PostgreSQLContainer
 import sbt._
 
-case class SlickSourceCodeGeneratorParams(
-    profile: String,
-    jdbcDriver: String,
-    outputDir: File,
-    pkg: String,
-    ignoreInvalidDefaults: Boolean,
-    codeGeneratorClass: String,
-    outputToMultipleFiles: Boolean
-)
-
 object SlickSourceGenerator {
 
   def apply(
@@ -18,7 +8,13 @@ object SlickSourceGenerator {
       mainClass: String,
       classLoader: ClassLoader,
       classpath: Seq[File],
-      params: SlickSourceCodeGeneratorParams,
+      profile: String,
+      jdbcDriver: String,
+      outputDir: File,
+      pkg: String,
+      ignoreInvalidDefaults: Boolean,
+      codeGeneratorClass: String,
+      outputToMultipleFiles: Boolean,
       log: Logger,
       databaseContainer: PostgreSQLContainer
   ): Seq[File] = {
@@ -29,22 +25,22 @@ object SlickSourceGenerator {
         mainClass,
         classpath,
         Array(
-          params.profile,
-          params.jdbcDriver,
+          profile,
+          jdbcDriver,
           databaseContainer.jdbcUrl,
-          params.outputDir.getPath,
-          params.pkg,
+          outputDir.getPath,
+          pkg,
           databaseContainer.username,
           databaseContainer.password,
-          params.ignoreInvalidDefaults.toString,
-          params.codeGeneratorClass,
-          params.outputToMultipleFiles.toString
+          ignoreInvalidDefaults.toString,
+          codeGeneratorClass,
+          outputToMultipleFiles.toString
         ),
         log
       )
       .failed
       .foreach(sys error _.getMessage)
 
-    (params.outputDir / params.pkg.replace('.', '/')).listFiles().toSeq
+    (outputDir / pkg.replace('.', '/')).listFiles().toSeq
   }
 }
