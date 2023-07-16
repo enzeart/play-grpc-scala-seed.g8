@@ -2,6 +2,7 @@ import play.grpc.gen.scaladsl._
 import play.sbt.PlayImport.PlayKeys._
 import com.dimafeng.testcontainers.PostgreSQLContainer
 import org.testcontainers.utility.DockerImageName
+import $name;format="space,Camel"$Keys._
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -19,6 +20,11 @@ lazy val `$name;format="norm"$` = (project in file("."))
         version := "0.0.0",
         organization := "$organization$",
         scalaVersion := "$scala_version$",
+        $name;format="space,camel"$DevelopmentPostgresqlContainer := {
+          val container = PostgreSQLContainer(DockerImageName.parse("postgres:latest"))
+          container.start()
+          container
+        },
         $if(codeartifact_support_enabled.truthy)$
         codeArtifactUrl := "$codeartifact_url$"
         $endif$
@@ -58,9 +64,26 @@ lazy val `$name;format="norm"$-db` = (project in file("$name;format="norm"$-db")
   .enablePlugins($name;format="space,Camel"$DbPlugin)
   .settings(
     name := "$name;format="norm"$-db",
-    $name;format="space,camel"$SlickCodegenAdditionalClasspath += (`$name;format="norm"$-db-utils` / Compile / classDirectory).value,
-    $name;format="space,camel"$SlickCodegenAdditionalClasspath ++= (Compile / resourceDirectories).value,
-    Compile / sourceGenerators += $name;format="space,camel"$SlickCodegen.taskValue,
+     Compile / sourceGenerators += Def.task {
+      SlickSourceGenerator(
+        runner = runner.value,
+        mainClass = "slick.codegen.SourceCodeGenerator",
+        classLoader = $name;format="space,Camel"$DbPlugin.getClass.getClassLoader,
+        classpath =
+          (Compile / dependencyClasspath).value.files ++ (Compile / resourceDirectories).value :+ (`$name;format="norm"$-db-utils` / Compile / classDirectory).value,
+        params = SlickSourceCodeGeneratorParams(
+          profile = "$package$.db_utils.CustomPostgresProfile",
+          jdbcDriver = "org.postgresql.Driver",
+          outputDir = (Compile / sourceManaged).value,
+          pkg = "$package$.db",
+          ignoreInvalidDefaults = true,
+          codeGeneratorClass = "$package$.db_utils.CustomSourceCodeGenerator",
+          outputToMultipleFiles = true
+        ),
+        log = streams.value.log,
+        databaseContainer = (Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer).value
+      )
+    },
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8"
   )
 
@@ -105,11 +128,6 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
     ),
     Universal / packageName := name.value,
     topLevelDirectory := Some(packageName.value),
-    Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer := {
-      val container = PostgreSQLContainer(DockerImageName.parse("postgres:latest"))
-      container.start()
-      container
-    },
     Compile / fork := true,
     Compile / javaOptions ++= {
       val container = (Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer).value
