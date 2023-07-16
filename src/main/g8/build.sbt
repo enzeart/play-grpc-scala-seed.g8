@@ -64,9 +64,26 @@ lazy val `$name;format="norm"$-db` = (project in file("$name;format="norm"$-db")
   .enablePlugins($name;format="space,Camel"$DbPlugin)
   .settings(
     name := "$name;format="norm"$-db",
-    $name;format="space,camel"$SlickCodegenAdditionalClasspath += (`$name;format="norm"$-db-utils` / Compile / classDirectory).value,
-    $name;format="space,camel"$SlickCodegenAdditionalClasspath ++= (Compile / resourceDirectories).value,
-    Compile / sourceGenerators += $name;format="space,camel"$SlickCodegen.taskValue,
+     Compile / sourceGenerators += Def.task {
+      SlickSourceGenerator(
+        runner = runner.value,
+        mainClass = "slick.codegen.SourceCodeGenerator",
+        classLoader = $name;format="space,Camel"$DbPlugin.getClass.getClassLoader,
+        classpath =
+          (Compile / dependencyClasspath).value.files ++ (Compile / resourceDirectories).value :+ (`$name;format="norm"$-db-utils` / Compile / classDirectory).value,
+        params = SlickSourceCodeGeneratorParams(
+          profile = "$package$.db_utils.CustomPostgresProfile",
+          jdbcDriver = "org.postgresql.Driver",
+          outputDir = (Compile / sourceManaged).value,
+          pkg = "$package$.db",
+          ignoreInvalidDefaults = true,
+          codeGeneratorClass = "$package$.db_utils.CustomSourceCodeGenerator",
+          outputToMultipleFiles = true
+        ),
+        log = streams.value.log,
+        databaseContainer = (Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer).value
+      )
+    },
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8"
   )
 

@@ -1,4 +1,3 @@
-import com.dimafeng.testcontainers.PostgreSQLContainer
 import giter8.ScaffoldPlugin
 import sbt.{AutoPlugin, Def, _}
 
