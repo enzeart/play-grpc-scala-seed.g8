@@ -20,7 +20,7 @@ lazy val `$name;format="norm"$` = (project in file("."))
         version := "0.0.0",
         organization := "$organization$",
         scalaVersion := "$scala_version$",
-        $name;format="space,camel"$DevelopmentPostgresqlContainer := {
+        appDevelopmentPostgresqlContainer := {
           val container = PostgreSQLContainer(DockerImageName.parse("postgres:latest"))
           container.start()
           container
@@ -82,7 +82,7 @@ lazy val `$name;format="norm"$-db` = (project in file("$name;format="norm"$-db")
         codeGeneratorClass = "$package$.db_utils.CustomSourceCodeGenerator",
         outputToMultipleFiles = true,
         log = streams.value.log,
-        databaseContainer = (Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer).value
+        databaseContainer = (Compile / appDevelopmentPostgresqlContainer).value
       )
     },
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8"
@@ -131,7 +131,7 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
     topLevelDirectory := Some(packageName.value),
     Compile / fork := true,
     Compile / javaOptions ++= {
-      val container = (Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer).value
+      val container = (Compile / appDevelopmentPostgresqlContainer).value
       Seq(
         s"-Dapp-server.app.database.postgresql.db.properties.url=\${container.jdbcUrl}&stringtype=unspecified",
         s"-Dapp-server.app.database.postgresql.db.properties.user=\${container.username}",
@@ -140,7 +140,7 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
     },
     playRunHooks += {
       val classpath = (Compile / dependencyClasspath).value.files :+ (baseDirectory.value / "dummy-data")
-      val container = (Compile / $name;format="space,camel"$DevelopmentPostgresqlContainer).value
+      val container = (Compile / appDevelopmentPostgresqlContainer).value
       DevelopmentDatabaseHook(classpath, container)
     },
   )
