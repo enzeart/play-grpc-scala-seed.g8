@@ -90,9 +90,13 @@ lazy val `$name;format="norm"$-db` = (project in file("$name;format="norm"$-db")
 
 lazy val `$name;format="norm"$-core` = (project in file("$name;format="norm"$-core"))
   .dependsOn(`$name;format="norm"$-db`)
-  .enablePlugins(AkkaGrpcPlugin)
+  .enablePlugins(
+    AkkaGrpcPlugin,
+    $name;format="space,Camel"$CorePlugin
+  )
   .settings(
     name := "$name;format="norm"$-core",
+    Compile / appPackageName := "$package$.core",
     libraryDependencies ++= $name;format="space,Camel"$Dependencies.coreDependencies,
     dependencyOverrides ++= $name;format="space,Camel"$Dependencies.coreDependencyOverrides,
     libraryDependencies ++= $name;format="space,Camel"$Dependencies.protobufDependencies,
