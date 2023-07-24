@@ -1,7 +1,5 @@
 import play.grpc.gen.scaladsl._
 import play.sbt.PlayImport.PlayKeys._
-import com.dimafeng.testcontainers.PostgreSQLContainer
-import org.testcontainers.utility.DockerImageName
 import $name;format="space,Camel"$Keys._
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
@@ -20,11 +18,7 @@ lazy val `$name;format="norm"$` = (project in file("."))
         version := "0.0.0",
         organization := "$organization$",
         scalaVersion := "$scala_version$",
-        appDevelopmentPostgresqlContainer := {
-          val container = PostgreSQLContainer(DockerImageName.parse("postgres:latest"))
-          container.start()
-          container
-        },
+        appDevelopmentPostgresqlContainer := PostgreSqlContainerSingleton.Instance,
         $if(codeartifact_support_enabled.truthy)$
         codeArtifactUrl := "$codeartifact_url$"
         $endif$
