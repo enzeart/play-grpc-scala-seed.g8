@@ -79,6 +79,16 @@ lazy val `$name;format="norm"$-db` = (project in file("$name;format="norm"$-db")
         databaseContainer = (Compile / appDevelopmentPostgresqlContainer).value
       )
     },
+    appFlywayMigration := {
+      val jdbcUrl = sys.env.getOrElse("APP_DB_URL", throw new IllegalArgumentException("Missing environment variable: APP_DB_URL"))
+      val username = sys.env.getOrElse("APP_DB_USER", throw new IllegalArgumentException("Missing environment variable: APP_DB_USER"))
+      val password = sys.env.getOrElse("APP_DB_PASSWORD", throw new IllegalArgumentException("Missing environment variable: APP_DB_PASSWORD"))
+      val classpath = Seq.newBuilder[File]
+      classpath ++= (Compile / dependencyClasspath).value.files
+      classpath ++= (Compile / resourceDirectories).value
+      classpath += (`$name;format="norm"$-db-utils` / Compile / classDirectory).value
+      FlywayMigration($name;format="space,Camel"$DbPlugin.getClass.getClassLoader, classpath.result(), jdbcUrl, username, password)
+    },
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8"
   )
 
