@@ -64,3 +64,30 @@ Database schema management capabilities are provided by [Flyway](https://flywayd
 ### Build Tool
 
 [sbt](https://www.scala-sbt.org/) is the project's primary build tool.
+
+## Multi-Project Development
+
+The development server can be configured to execute commands in external projects that are included
+as Git submodules. For example:
+
+```scala
+playRunHooks += GitSubmoduleServiceHook(
+  repositoryRoot = baseDirectory.value.getParentFile,
+  submoduleName = "modules/example-service",
+  command = "sbt" :: "example-service-server/run" :: Nil
+)
+```
+
+The above configuration will execute the command `sbt example-service-server/run` at the
+file path registered in the `.gitmodules` configuration file for the submodule named
+`modules/example-service` after the development server has been started.
+
+You must manage everything else about the submodules yourself. Here are some useful commands
+to help ensure that the project is up-to-date with all remote changes.
+
+```bash
+git submodule sync --recursive
+git submodule update --init --recursive --remote
+```
+
+
