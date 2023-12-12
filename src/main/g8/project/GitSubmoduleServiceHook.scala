@@ -15,7 +15,7 @@ object GitSubmoduleServiceHook {
   val PlayConsoleInteractionModeTerminationHook: ServiceTerminationHook = (s: ServiceContext) =>
     s.stdin.foreach(in => { in.write(13); in.write(13); in.flush() })
 
-  case class ServiceContext(process: Option[Process] = None, stdin: Option[OutputStream] = None)
+  final case class ServiceContext(process: Option[Process] = None, stdin: Option[OutputStream] = None)
 
   def apply(
       repositoryRoot: File,
@@ -27,7 +27,7 @@ object GitSubmoduleServiceHook {
   }
 }
 
-private class GitSubmoduleServiceHook(
+private final class GitSubmoduleServiceHook(
     repositoryRoot: File,
     submoduleName: String,
     command: Seq[String],
