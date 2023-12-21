@@ -80,9 +80,9 @@ lazy val `$name;format="norm"$-db` = (project in file("$name;format="norm"$-db")
       )
     },
     appFlywayMigration := {
-      val jdbcUrl = sys.env.getOrElse("APP_DB_URL", throw new IllegalArgumentException("Missing environment variable: APP_DB_URL"))
-      val username = sys.env.getOrElse("APP_DB_USER", throw new IllegalArgumentException("Missing environment variable: APP_DB_USER"))
-      val password = sys.env.getOrElse("APP_DB_PASSWORD", throw new IllegalArgumentException("Missing environment variable: APP_DB_PASSWORD"))
+      val jdbcUrl = sys.env.getOrElse("APP_$name;format="snake,upper"$_DB_URL", throw new IllegalArgumentException("Missing environment variable: APP_$name;format="snake,upper"$_DB_URL"))
+      val username = sys.env.getOrElse("APP_$name;format="snake,upper"$_DB_USER", throw new IllegalArgumentException("Missing environment variable: APP_$name;format="snake,upper"$_DB_USER"))
+      val password = sys.env.getOrElse("APP_$name;format="snake,upper"$_DB_PASSWORD", throw new IllegalArgumentException("Missing environment variable: APP_$name;format="snake,upper"$_DB_PASSWORD"))
       val classpath = Seq.newBuilder[File]
       classpath ++= (Compile / dependencyClasspath).value.files
       classpath ++= (Compile / resourceDirectories).value
