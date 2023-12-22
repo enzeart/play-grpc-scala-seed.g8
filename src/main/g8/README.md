@@ -76,7 +76,10 @@ playRunHooks ++= {
   implicit val sharedContext: SharedContext = {
     playInteractionMode.value match {
       case mode: AppInteractionMode =>
-        SharedContext(extraEnv = Seq(mode.environmentVariable -> ""), logger = streams.value.log)
+        SharedContext(
+          extraEnv = Seq(mode.environmentVariable -> ""),
+          logger = streams.value.log
+        )
       case _ => SharedContext(logger = streams.value.log)
     }
   }
