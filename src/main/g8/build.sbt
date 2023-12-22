@@ -151,4 +151,5 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
       val container = (Compile / appDevelopmentPostgresqlContainer).value
       DevelopmentDatabaseHook(classpath, container)
     },
+    playInteractionMode := AppInteractionMode.Default,
   )
