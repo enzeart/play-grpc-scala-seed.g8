@@ -147,4 +147,9 @@ git submodule deinit --all
 git config -f .git/modules/<path_to_parent_of_submodule_to_exclude>/config submodule.<submodule_name>.update none
 ```
 
+## Gitlab CI
 
+### Docker-in-Docker
+Gitlab CI can fail if the Docker-in-Docker service version is incompatible with the one installed in the build stage's
+before_script section. If you run into any cryptic failures from testcontainer saying it cannot find a valid Docker environment,
+make sure the major versions of these two docker installations are compatible.

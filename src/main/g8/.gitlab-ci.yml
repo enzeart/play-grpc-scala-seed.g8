@@ -21,7 +21,7 @@ build-docker-image:
     name: amazon/aws-cli
     entrypoint: [""]
   services:
-    - name: docker:dind
+    - name: docker:20.10.24-dind
       alias: docker
   before_script:
     - amazon-linux-extras install docker
