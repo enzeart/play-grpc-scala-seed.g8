@@ -6,7 +6,7 @@
 
 This project uses Docker to generate Slick code based on Flyway migrations
 defined in the $name;format="norm"$-db subproject. Communication between the
-build and the Docker daemon are managed by the Testcontainers library. Depending
+build and the Docker daemon is managed by the Testcontainers library. Depending
 on your particular Docker setup, you may have to tell Testcontainers
 how to find your Docker daemon. The Testcontainers website provides
 [instructions](https://www.testcontainers.org/features/configuration/)
@@ -21,6 +21,21 @@ this project when using Docker Desktop on Mac:
 cat <<EOF > ~/.testcontainers.properties
 docker.host=unix\:///var/run/docker.sock
 EOF
+```
+
+Additionally, you must provide access to the Docker daemon inside any builds you run locally.
+Docker Desktop makes this non-trivial, but it can be done with the following commands:
+
+```bash
+# This command starts a TCP socket server that will bind to the wildcard address
+# and listen on port 2376. It will forward traffic to Docker Desktop's socket file
+# on the host machine, effectively forwarding all traffic to Docker.
+socat TCP-LISTEN:2376,reuseaddr,fork,bind=0.0.0.0 UNIX-CLIENT:/var/run/docker.sock
+
+# Pass the DOCKER_HOST build argument to the build. The Dockerfile is already set up
+# to use this value to configure the necessary environment variable. The address shown
+# by 'ifconfig' for the en0 interface should work here.
+docker build -t $name;format="norm"$-server:0.0.0 --build-arg DOCKER_HOST=tcp://<address>:2376 .
 ```
 
 $if(codeartifact_support_enabled.truthy)$
