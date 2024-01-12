@@ -66,7 +66,7 @@ The application server is [Play Framework](https://www.playframework.com/).
 Dependency injection is provided by [Guice](https://github.com/google/guice/wiki/GettingStarted) with scala extensions
 provided by [ScalaGuice](https://github.com/codingwell/scala-guice).
 
-### gPRC
+### gRPC
 
 gRPC supports is provided by [Play gRPC](https://github.com/playframework/play-grpc/blob/main/docs/src/main/paradox/play/index.md)
 which is built on top of [Akka gRPC](https://doc.akka.io/docs/akka-grpc/2.1/overview.html).
