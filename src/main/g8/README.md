@@ -30,12 +30,12 @@ Docker Desktop makes this non-trivial, but it can be done with the following com
 # This command starts a TCP socket server that will bind to the wildcard address
 # and listen on port 2376. It will forward traffic to Docker Desktop's socket file
 # on the host machine, effectively forwarding all traffic to Docker.
-socat TCP-LISTEN:2376,reuseaddr,fork,bind=0.0.0.0 UNIX-CLIENT:/var/run/docker.sock
+socat TCP-LISTEN:2375,reuseaddr,fork,bind=0.0.0.0 UNIX-CLIENT:/var/run/docker.sock
 
 # Pass the DOCKER_HOST build argument to the build. The Dockerfile is already set up
 # to use this value to configure the necessary environment variable. The address shown
 # by 'ifconfig' for the en0 interface should work here.
-docker build -t $name;format="norm"$-server:0.0.0 --build-arg DOCKER_HOST=tcp://<address>:2376 .
+docker build -t $name;format="norm"$-server:0.0.0 -f ./$name;format="norm"$-server/Dockerfile --build-arg DOCKER_HOST=tcp://$(ipconfig getifaddr en0):2375 .
 ```
 
 $if(codeartifact_support_enabled.truthy)$
