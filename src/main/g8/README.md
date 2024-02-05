@@ -35,7 +35,7 @@ socat TCP-LISTEN:2375,reuseaddr,fork,bind=0.0.0.0 UNIX-CLIENT:/var/run/docker.so
 # Pass the DOCKER_HOST build argument to the build. The Dockerfile is already set up
 # to use this value to configure the necessary environment variable. The address shown
 # by 'ifconfig' for the en0 interface should work here.
-docker build -t $name;format="norm"$-server:0.0.0 -f ./$name;format="norm"$-server/Dockerfile --build-arg DOCKER_HOST=tcp://$(ipconfig getifaddr en0):2375 .
+docker build -t $name;format="norm"$-server:0.0.0 -f ./$name;format="norm"$-server/Dockerfile --build-arg DOCKER_HOST=tcp://\$(ipconfig getifaddr en0):2375 .
 ```
 
 $if(codeartifact_support_enabled.truthy)$
