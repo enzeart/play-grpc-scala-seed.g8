@@ -132,6 +132,8 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
     pekkoGrpcExtraGenerators ++= Seq(PlayScalaServerCodeGenerator),
     pekkoGrpcGeneratedSources := Seq(PekkoGrpc.Server),
     Compile / PB.protoSources += (`$name;format="norm"$-protobuf` / sourceDirectory).value / "main" / "protobuf",
+    Test / PB.protoSources ++= (Compile / PB.protoSources).value,
+    Test / pekkoGrpcGeneratedSources := Seq(PekkoGrpc.Client),
     devSettings ++= Seq(
       "play.server.http.port" -> "$app_port$"
     ),
