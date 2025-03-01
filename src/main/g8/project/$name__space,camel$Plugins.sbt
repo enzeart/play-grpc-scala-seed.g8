@@ -24,7 +24,7 @@ libraryDependencies ++= Seq(
 
 // Git
 libraryDependencies ++= Seq(
-  "org.eclipse.jgit" % "org.eclipse.jgit" % "6.8.0.202311291450-r"
+  "org.eclipse.jgit" % "org.eclipse.jgit" % "$jgit_version$"
 )
 
 $if(codeartifact_support_enabled.truthy)$
