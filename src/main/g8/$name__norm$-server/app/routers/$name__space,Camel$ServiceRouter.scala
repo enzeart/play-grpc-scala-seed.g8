@@ -9,7 +9,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ProtobufRouter @Inject() (appServerConfig: AppServerConfig)(
+class $name;format="space,Camel"$ServiceRouter @Inject() (appServerConfig: AppServerConfig)(
     implicit actorSystem: ActorSystem,
     executionContext: ExecutionContext
 ) extends Abstract$name;format="space,Camel"$ServicePowerApiRouter(actorSystem) {

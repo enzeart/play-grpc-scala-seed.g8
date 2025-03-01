@@ -3,6 +3,6 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
-->      /       routers.ProtobufRouter
+->      /       routers.$name;format="space,Camel"$ServiceRouter
 
 ->      /       routers.ServerReflectionRouter
