@@ -5,13 +5,13 @@ addSbtPlugin("org.foundweekends.giter8" % "sbt-giter8-scaffold" % "$sbt_giter8_s
 addDependencyTreePlugin
 
 // Play Framework
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "$play_framework_version$")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "$play_framework_version$")
 
 // Protobuf
-addSbtPlugin("com.lightbend.akka.grpc" % "sbt-akka-grpc" % "$sbt_akka_grpc_version$")
+addSbtPlugin("org.apache.pekko" % "pekko-grpc-sbt-plugin" % "$pekko_grpc_sbt_plugin$")
 
 libraryDependencies ++= Seq(
-  "com.lightbend.play"   %% "play-grpc-generators"     % "$play_grpc_generators_version$"
+  "org.playframework"   %% "play-grpc-generators"     % "$play_grpc_generators_version$"
 )
 
 // Database

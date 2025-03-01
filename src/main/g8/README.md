@@ -69,7 +69,7 @@ provided by [ScalaGuice](https://github.com/codingwell/scala-guice).
 ### gRPC
 
 gRPC supports is provided by [Play gRPC](https://github.com/playframework/play-grpc/blob/main/docs/src/main/paradox/play/index.md)
-which is built on top of [Akka gRPC](https://doc.akka.io/docs/akka-grpc/2.1/overview.html).
+which is built on top of [Pekko gRPC](https://pekko.apache.org/docs/pekko-grpc/current/).
 
 ### Database
 

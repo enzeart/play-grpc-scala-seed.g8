@@ -11,7 +11,7 @@ class CustomSourceCodeGenerator(model: Model) extends SourceCodeGenerator(model)
     override def Column: slick.model.Column => ColumnDef = new Column(_) { column =>
 
       override def rawType: String = {
-        model.options
+        this.model.options
           .find(_.isInstanceOf[ColumnOption.SqlType])
           .flatMap { tpe =>
             tpe.asInstanceOf[ColumnOption.SqlType].typeName match {
@@ -23,7 +23,7 @@ class CustomSourceCodeGenerator(model: Model) extends SourceCodeGenerator(model)
             }
           }
           .getOrElse {
-            model.tpe match {
+            this.model.tpe match {
               case _ => super.rawType
             }
           }

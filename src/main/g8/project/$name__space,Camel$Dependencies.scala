@@ -14,18 +14,18 @@ object $name;format="space,Camel"$Dependencies {
   val scalatestplusPlay: ModuleID = "org.scalatestplus.play" %% "scalatestplus-play" % "$scalatestplus_play_version$" % Test
 
   //  Protobuf
-  val playGrpcRuntime: ModuleID = "com.lightbend.play" %% "play-grpc-runtime" % "$play_grpc_runtime_version$"
+  val playGrpcRuntime: ModuleID = "org.playframework" %% "play-grpc-runtime" % "$play_grpc_runtime_version$"
 
   val scalapbRuntime: ModuleID = "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion
 
   val scalapbRuntimeProtobuf: ModuleID = scalapbRuntime % ProtobufConfig
 
-  // Akka
-  val akkaDiscovery: ModuleID = "com.typesafe.akka" %% "akka-discovery" % PlayVersion.akkaVersion
+  // Pekko
+  val pekkoDiscovery: ModuleID = "org.apache.pekko" %% "pekko-discovery" % PlayVersion.pekkoVersion
 
-  val akkaHttp: ModuleID = "com.typesafe.akka" %% "akka-http" % PlayVersion.akkaHttpVersion
+  val pekkoHttp: ModuleID = "org.apache.pekko" %% "pekko-http" % PlayVersion.pekkoHttpVersion
 
-  val akkaHttpSprayJson: ModuleID = "com.typesafe.akka" %% "akka-http-spray-json" % PlayVersion.akkaHttpVersion
+  val pekkoHttpSprayJson: ModuleID = "org.apache.pekko" %% "pekko-http-spray-json" % PlayVersion.pekkoHttpVersion
 
   // Database
   val slickVersion = "$slick_version$"
@@ -94,8 +94,8 @@ object $name;format="space,Camel"$Dependencies {
   )
 
   val serverDependencyOverrides: Seq[ModuleID] = Seq(
-    akkaDiscovery,
-    akkaHttp,
-    akkaHttpSprayJson
+    pekkoDiscovery,
+    pekkoHttp,
+    pekkoHttpSprayJson
   )
 }

@@ -1,7 +1,7 @@
 package routers
 
-import akka.actor.ActorSystem
-import akka.grpc.scaladsl.Metadata
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.grpc.scaladsl.Metadata
 import $package$.grpc.{Abstract$name;format="space,Camel"$ServicePowerApiRouter, EchoReply, EchoRequest}
 import config.AppServerConfig
 
