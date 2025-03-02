@@ -7,7 +7,7 @@ import java.util.UUID
 import scala.reflect.classTag
 
 trait CustomPostgresProfile
-    extends ExPostgresProfile
+  extends ExPostgresProfile
     with PgArraySupport
     with PgDate2Support
     with PgRangeSupport
@@ -20,12 +20,13 @@ trait CustomPostgresProfile
   override protected def computeCapabilities: Set[slick.basic.Capability] =
     super.computeCapabilities + slick.jdbc.JdbcCapabilities.insertOrUpdate
 
+  // Make sure the inferred or explicit type matches the custom one from this module
   override val api: CustomAPI.type = CustomAPI
 
   object CustomAPI
-      extends super.API
+    extends ExtPostgresAPI
       with ArrayImplicits
-      with DateTimeImplicits
+      with Date2DateTimeImplicitsDuration
       with NetImplicits
       with LTreeImplicits
       with RangeImplicits
@@ -33,11 +34,10 @@ trait CustomPostgresProfile
       with SearchImplicits
       with SearchAssistants {
 
-    implicit object GetUuid extends GetResult[UUID] {
+    implicit object GetUUID extends GetResult[UUID] {
       override def apply(p: PositionedResult): UUID = UUID.fromString(p.nextString())
     }
   }
-
 }
 
 object CustomPostgresProfile extends CustomPostgresProfile {
