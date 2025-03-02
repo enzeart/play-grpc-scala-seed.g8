@@ -20,7 +20,7 @@ trait CustomPostgresProfile
   override protected def computeCapabilities: Set[slick.basic.Capability] =
     super.computeCapabilities + slick.jdbc.JdbcCapabilities.insertOrUpdate
 
-  // Make sure the inferred or explicit type matches the custom one from this module
+  // Make sure the inferred or explicit type matches that of the CustomAPI object
   override val api: CustomAPI.type = CustomAPI
 
   object CustomAPI
