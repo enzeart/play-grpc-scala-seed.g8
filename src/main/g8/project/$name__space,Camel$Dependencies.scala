@@ -51,6 +51,8 @@ object $name;format="space,Camel"$Dependencies {
 
   val flywayCore: ModuleID = "org.flywaydb" % "flyway-core" % "$flyway_version$" % Test
 
+  val flywayDatabasePostgresql: ModuleID = "org.flywaydb" % "flyway-database-postgresql" % "$flyway_version$" % Test
+
   val protobufDependencies: Seq[ModuleID] = Seq(
     playGrpcRuntime,
     scalapbRuntimeProtobuf
@@ -78,7 +80,8 @@ object $name;format="space,Camel"$Dependencies {
     scalatest,
     testcontainersScalaScalatest,
     testcontainersScalaPostgresql,
-    flywayCore
+    flywayCore,
+    flywayDatabasePostgresql
   )
 
   val coreDependencyOverrides: Seq[ModuleID] = Seq(

@@ -10,7 +10,7 @@ import play.api.test.Helpers.await
 import java.util.concurrent.TimeUnit
 import scala.util.Random
 
-class AppTemplateSpec extends PlaySpec with GuiceOneServerPerSuite {
+class AppTemplateServerSpec extends PlaySpec with GuiceOneServerPerSuite {
 
   "verify gRPC is working" in {
     implicit val sys: ActorSystem = app.injector.instanceOf[ActorSystem]
