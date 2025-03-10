@@ -14,7 +14,7 @@
 
   <appender name="STDOUT" class="ConsoleAppender">
     <encoder class="PatternLayoutEncoder">
-      <pattern>%highlight(%-5level) %logger{15} - %message%n%xException{10}</pattern>
+      <pattern>%-5level %logger{15} - %message%n%xException{10}</pattern>
     </encoder>
   </appender>
 
