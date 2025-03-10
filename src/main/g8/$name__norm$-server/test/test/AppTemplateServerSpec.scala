@@ -5,6 +5,8 @@ import org.apache.pekko.actor.ActorSystem
 import org.apache.pekko.grpc.GrpcClientSettings
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneServerPerSuite
+import play.api.libs.ws.WSClient
+import play.api.mvc.Results
 import play.api.test.Helpers.await
 
 import java.util.concurrent.TimeUnit
@@ -19,5 +21,11 @@ class AppTemplateServerSpec extends PlaySpec with GuiceOneServerPerSuite {
     val message = Random.nextString(100)
     val response = await(client.echo(EchoRequest(message = message)), 1, TimeUnit.MINUTES)
     response.message mustBe message
+  }
+
+  "verify healthcheck is working" in {
+    val ws = app.injector.instanceOf[WSClient]
+    val response = await(ws.url(s"http://127.0.0.1:\$port/healthcheck").get(), 1, TimeUnit.MINUTES)
+    response.status mustBe Results.Ok.header.status
   }
 }
