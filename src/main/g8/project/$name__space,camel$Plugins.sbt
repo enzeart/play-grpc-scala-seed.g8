@@ -8,7 +8,7 @@ addDependencyTreePlugin
 addSbtPlugin("org.playframework" % "sbt-plugin" % "$play_framework_version$")
 
 // Protobuf
-addSbtPlugin("org.apache.pekko" % "pekko-grpc-sbt-plugin" % "$pekko_grpc_sbt_plugin$")
+addSbtPlugin("org.apache.pekko" % "pekko-grpc-sbt-plugin" % "$pekko_grpc_sbt_plugin_version$")
 
 libraryDependencies ++= Seq(
   "org.playframework" %% "play-grpc-generators" % "$play_grpc_generators_version$"

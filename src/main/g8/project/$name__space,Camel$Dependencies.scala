@@ -20,6 +20,8 @@ object $name;format="space,Camel"$Dependencies {
 
   val scalapbRuntimeProtobuf: ModuleID = scalapbRuntime % ProtobufConfig
 
+  val scalapbJson4s: ModuleID = "com.thesamet.scalapb" %% "scalapb-json4s" % "$scalapb_json4s_version$"
+
   // Pekko
   val pekkoDiscovery: ModuleID = "org.apache.pekko" %% "pekko-discovery" % PlayVersion.pekkoVersion
 
@@ -93,7 +95,8 @@ object $name;format="space,Camel"$Dependencies {
     pureconfig,
     scalaGuice,
     scalatestplusPlay,
-    slickHikaricp
+    slickHikaricp,
+    scalapbJson4s
   )
 
   val serverDependencyOverrides: Seq[ModuleID] = Seq(
