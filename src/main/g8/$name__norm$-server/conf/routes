@@ -9,4 +9,6 @@ GET     /healthcheck    controllers.HttpApiController.healthCheck
 
 ->      /               routers.$name;format="space,Camel"$ServiceRouter
 
-->      /               routers.ServerReflectionRouter
+->      /               routers.V1AlphaServerReflectionRouter
+
+->      /               routers.V1ServerReflectionRouter
