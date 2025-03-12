@@ -17,5 +17,5 @@ final class HttpApiController @Inject() (
 
   def healthCheck: Action[AnyContent] = Action(Ok(""))
 
-  def echo: Action[EchoRequest] = ScalaPbAction(router.echo)
+  def echo: Action[EchoRequest] = PekkoGrpcAction(router.echo)
 }

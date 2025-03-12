@@ -15,7 +15,7 @@ abstract class ServerReflectionRouter(serviceName: String, serviceDescriptions: 
 
   def this(serviceName: String, serviceDescriptions: java.util.Set[ServiceDescription])(implicit
       actorSystem: ActorSystem
-  ) {
+  ) = {
     this(serviceName, serviceDescriptions.asScala.toList)
   }
 

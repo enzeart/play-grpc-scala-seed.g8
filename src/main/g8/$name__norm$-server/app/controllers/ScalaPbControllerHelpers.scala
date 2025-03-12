@@ -30,7 +30,7 @@ object ScalaPbControllerHelpers {
 
 trait ScalaPbControllerHelpers { self: BaseController =>
 
-  protected def ScalaPbAction[A <: GeneratedMessage: GeneratedMessageCompanion, B <: GeneratedMessage](
+  protected def PekkoGrpcAction[A <: GeneratedMessage: GeneratedMessageCompanion, B <: GeneratedMessage](
       rpc: (A, Metadata) => Future[B],
       metadata: Request[A] => Metadata = (_: Request[A]) => MetadataBuilder.empty
   )(implicit ec: ExecutionContext): Action[A] =
