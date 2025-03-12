@@ -155,16 +155,35 @@ before_script section. If you run into any cryptic failures from testcontainer s
 make sure the major versions of these two docker installations are compatible.
 
 ## gRPC Server Reflection
-There is a lack of documentation that demonstrates how to enable Server Reflection with Play gRPC. I was able to figure
-out a working solution through random searches on the internet. Here are the relevant links:
+Server Reflection is currently experimental and there is a lack of formal documentation around how to implement it with
+Play gRPC. The following links provide enough context to achieve a working solution.
 
-1. [gRPC reflection in Play #11025](https://github.com/playframework/playframework/issues/11025)
-2. [haghard/play-scala-grpc-example](https://github.com/haghard/play-scala-grpc-example)
-3. [GreeterServiceReflectionRouter.scala](https://github.com/haghard/play-scala-grpc-example/blob/master/app/routers/GreeterServiceReflectionRouter.scala)
-4. [routes](https://github.com/haghard/play-scala-grpc-example/blob/master/conf/routes)
-5. [Server reflection is experimental #850](https://github.com/akka/akka-grpc/issues/850)
+- [gRPC reflection in Play #11025](https://github.com/playframework/playframework/issues/11025)
+- [haghard/play-scala-grpc-example](https://github.com/haghard/play-scala-grpc-example)
+- [GreeterServiceReflectionRouter.scala](https://github.com/haghard/play-scala-grpc-example/blob/master/app/routers/GreeterServiceReflectionRouter.scala)
+- [routes](https://github.com/haghard/play-scala-grpc-example/blob/master/conf/routes)
+- [Server reflection is experimental #850](https://github.com/akka/akka-grpc/issues/850)
 
-Enable Server Reflection with the following steps:
-1. Create a class that extends `play.grpc.internal.PlayRouter("grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo")`
-2. Override the "respond" field of this class and set the value similar to the example from link 3 listed above.
-3. Configure a route for this router similar to the example from link 4 listed above.
+Server Reflection is implemented in the server subproject as `ServerReflectionRouter.scala`.
+
+## Template Sanity Test and Cleanup
+The project includes components used to sanity the test core functionality of what was generated from the template.
+Running `sbt $name;format="norm"$-server/test` will execute these tests.
+Here's a checklist of what to clean up after testing:
+
+- [ ] Delete `V1__create_app_template_db_test_table.sql`
+- [ ] Delete `AppTemplateServerSpec.scala`
+- [ ] Remove the following from `$name;format="snake"$_service.proto`
+  - The `Echo` rpc definition
+  - The `EchoRequest` and `EchoReply` message definitions
+- [ ] Remove the following from `$name;format="space,Camel"$ServiceRouter.scala`
+  - The imports for `EchoRequest` and `EchoReply`
+  - The `echo` method
+- [ ] Remove the following from `HttpApiController.scala`
+  - The import for `EchoRequest`
+  - The `echo` method
+- [ ] Remove the following from `routes`
+  - The route for `/echo`
+- [ ] Remove this section from the documentation
+
+
