@@ -1,35 +1,33 @@
 // Utilities
-addSbtPlugin("org.scalameta"            % "sbt-scalafmt"        % "$sbt_scalafmt_version$")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "$sbt_scalafmt_version$")
 addSbtPlugin("org.foundweekends.giter8" % "sbt-giter8-scaffold" % "$sbt_giter8_scaffold_version$")
 
 addDependencyTreePlugin
 
 // Play Framework
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "$play_framework_version$")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "$play_framework_version$")
 
 // Protobuf
-addSbtPlugin("com.lightbend.akka.grpc" % "sbt-akka-grpc" % "$sbt_akka_grpc_version$")
+addSbtPlugin("org.apache.pekko" % "pekko-grpc-sbt-plugin" % "$pekko_grpc_sbt_plugin_version$")
 
 libraryDependencies ++= Seq(
-  "com.lightbend.play"   %% "play-grpc-generators"     % "$play_grpc_generators_version$"
+  "org.playframework" %% "play-grpc-generators" % "$play_grpc_generators_version$"
 )
 
 // Database
 libraryDependencies ++= Seq(
-  "org.flywaydb"       % "flyway-core"    % "$flyway_version$",
+  "org.flywaydb" % "flyway-core" % "$flyway_version$",
+  "org.flywaydb" % "flyway-database-postgresql" % "$flyway_version$",
   "com.dimafeng" %% "testcontainers-scala-postgresql" % "$testcontainers_scala_version$",
-  "org.postgresql"     % "postgresql"     % "$postgresql_version$"
+  "org.postgresql" % "postgresql" % "$postgresql_version$"
 )
 
 // Git
 libraryDependencies ++= Seq(
-  "org.eclipse.jgit" % "org.eclipse.jgit" % "6.8.0.202311291450-r"
+  "org.eclipse.jgit" % "org.eclipse.jgit" % "$jgit_version$"
 )
 
 $if(codeartifact_support_enabled.truthy)$
 // AWS CodeArtifact Support
 addSbtPlugin("io.github.bbstilson" % "sbt-codeartifact" % "$sbt_codeartifact_version$")
 $endif$
-
-// Dependency Conflicts
-libraryDependencySchemes += "org.scala-lang.modules" %% "scala-xml" % VersionScheme.Always

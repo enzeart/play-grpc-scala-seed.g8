@@ -18,7 +18,7 @@ stages:
     name: amazon/aws-cli
     entrypoint: [""]
   services:
-    - name: docker:20.10.24-dind
+    - name: docker:27.1.1-dind
       alias: docker
   before_script:
     - amazon-linux-extras install docker

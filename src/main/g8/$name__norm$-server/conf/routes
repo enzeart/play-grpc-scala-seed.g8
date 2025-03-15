@@ -3,4 +3,12 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
-->      /       routers.ProtobufRouter
+POST    /echo           controllers.HttpApiController.echo
+
+GET     /healthcheck    controllers.HttpApiController.healthCheck
+
+->      /               routers.$name;format="space,Camel"$ServiceRouter
+
+->      /               routers.V1AlphaServerReflectionRouter
+
+->      /               routers.V1ServerReflectionRouter

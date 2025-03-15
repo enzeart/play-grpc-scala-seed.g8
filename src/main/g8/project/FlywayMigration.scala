@@ -23,6 +23,6 @@ object FlywayMigration {
   ): Unit = {
     Using(new URLClassLoader(classpath.map(_.asURL), classloader)) { classLoader =>
       Flyway.configure(classLoader).dataSource(jdbcUrl, username, password).load().migrate()
-    }
+    }.get
   }
 }

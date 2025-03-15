@@ -28,7 +28,7 @@ lazy val `$name;format="norm"$` = (project in file("."))
 
 lazy val `$name;format="norm"$-protobuf` = (project in file("$name;format="norm"$-protobuf"))
   .enablePlugins(
-    AkkaGrpcPlugin
+    PekkoGrpcPlugin
   )
   .settings(
     name := "$name;format="norm"$-protobuf",
@@ -95,7 +95,7 @@ lazy val `$name;format="norm"$-db` = (project in file("$name;format="norm"$-db")
 lazy val `$name;format="norm"$-core` = (project in file("$name;format="norm"$-core"))
   .dependsOn(`$name;format="norm"$-db`)
   .enablePlugins(
-    AkkaGrpcPlugin,
+    PekkoGrpcPlugin,
     $name;format="space,Camel"$CorePlugin
   )
   .settings(
@@ -107,15 +107,15 @@ lazy val `$name;format="norm"$-core` = (project in file("$name;format="norm"$-co
     libraryDependencies ++= $name;format="space,Camel"$Dependencies.protobufServiceDependencies,
     dependencyOverrides ++= $name;format="space,Camel"$Dependencies.protobufDependencyOverrides,
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8",
-    akkaGrpcExtraGenerators ++= Seq(PlayScalaClientCodeGenerator),
-    akkaGrpcGeneratedSources := Seq(AkkaGrpc.Client)
+    pekkoGrpcExtraGenerators ++= Seq(PlayScalaClientCodeGenerator),
+    pekkoGrpcGeneratedSources := Seq(PekkoGrpc.Client)
   )
 
 lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-server"))
   .enablePlugins(
-    AkkaGrpcPlugin,
+    PekkoGrpcPlugin,
     PlayScala,
-    PlayAkkaHttp2Support,
+    PlayPekkoHttp2Support,
     $name;format="space,Camel"$ServerPlugin
   )
   .dependsOn(
@@ -128,10 +128,12 @@ lazy val `$name;format="norm"$-server` = (project in file("$name;format="norm"$-
     dependencyOverrides ++= $name;format="space,Camel"$Dependencies.serverDependencyOverrides,
     dependencyOverrides ++= $name;format="space,Camel"$Dependencies.protobufDependencyOverrides,
     g8ScaffoldTemplatesDirectory := baseDirectory.value / ".." / ".g8",
-    akkaGrpcCodeGeneratorSettings += "server_power_apis",
-    akkaGrpcExtraGenerators ++= Seq(PlayScalaServerCodeGenerator),
-    akkaGrpcGeneratedSources := Seq(AkkaGrpc.Server),
+    pekkoGrpcCodeGeneratorSettings += "server_power_apis",
+    pekkoGrpcExtraGenerators ++= Seq(PlayScalaServerCodeGenerator),
+    pekkoGrpcGeneratedSources := Seq(PekkoGrpc.Server),
     Compile / PB.protoSources += (`$name;format="norm"$-protobuf` / sourceDirectory).value / "main" / "protobuf",
+    Test / PB.protoSources ++= (Compile / PB.protoSources).value,
+    Test / pekkoGrpcGeneratedSources := Seq(PekkoGrpc.Client),
     devSettings ++= Seq(
       "play.server.http.port" -> "$app_port$"
     ),
