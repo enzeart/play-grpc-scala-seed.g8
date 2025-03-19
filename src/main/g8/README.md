@@ -172,6 +172,7 @@ Running `sbt $name;format="norm"$-server/test` will execute these tests.
 Here's a checklist of what to clean up after testing:
 
 - [ ] Delete `V1__create_app_template_db_test_table.sql`
+- [ ] Delete `AppTemplateDbSpec.scala`
 - [ ] Delete `AppTemplateServerSpec.scala`
 - [ ] Remove the following from `$name;format="snake"$_service.proto`
   - The `Echo` rpc definition
