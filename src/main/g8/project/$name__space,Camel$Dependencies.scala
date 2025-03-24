@@ -56,7 +56,13 @@ object $name;format="space,Camel"$Dependencies {
   val flywayDatabasePostgresql: ModuleID = "org.flywaydb" % "flyway-database-postgresql" % "$flyway_version$" % Test
 
   // Chimney
-  val chimney: ModuleID = "io.scalaland" %% "chimney" % "$chimney_version$"
+  val chimneyVersion = "$chimney_version$"
+
+  val chimney: ModuleID = "io.scalaland" %% "chimney" % chimneyVersion
+
+  val chimneyJavaCollections: ModuleID = "io.scalaland" %% "chimney-java-collections" % chimneyVersion
+
+  val chimneyProtobufs: ModuleID = "io.scalaland" %% "chimney-protobufs" % chimneyVersion
 
   val protobufDependencies: Seq[ModuleID] = Seq(
     playGrpcRuntime,
@@ -87,7 +93,9 @@ object $name;format="space,Camel"$Dependencies {
     testcontainersScalaPostgresql,
     flywayCore,
     flywayDatabasePostgresql,
-    chimney
+    chimney,
+    chimneyJavaCollections,
+    chimneyProtobufs
   )
 
   val coreDependencyOverrides: Seq[ModuleID] = Seq(
