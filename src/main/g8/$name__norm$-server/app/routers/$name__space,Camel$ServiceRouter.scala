@@ -7,17 +7,15 @@ import config.AppServerConfig
 import play.api.Logging
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 @Singleton
 class $name;format="space,Camel"$ServiceRouter @Inject() (appServerConfig: AppServerConfig)(
     implicit actorSystem: ActorSystem,
-    override val executionContext: ExecutionContext
-) extends Abstract$name;format="space,Camel"$ServicePowerApiRouter(actorSystem)
-    with GrpcServiceHelpers
+) extends Abstract$name;format="space,Camel"$ServicePowerApiRouter(actorSystem, GrpcRouterExceptionHandler)
     with Logging {
 
-  override def echo(in: EchoRequest, metadata: Metadata): Future[EchoReply] = withGrpcServiceExceptionHandling {
+  override def echo(in: EchoRequest, metadata: Metadata): Future[EchoReply] = {
     Future.successful(EchoReply(message = in.message))
   }
 }
